@@ -1100,6 +1100,38 @@
       color: rgba(255,255,255,0.45);
     }
 
+    /* ─── VIDEO TABS ───────────────────────────────────────────────── */
+    .video-tabs {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      margin-bottom: 32px;
+    }
+
+    .video-tab {
+      padding: 10px 24px;
+      border-radius: 100px;
+      font-family: var(--sans);
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      border: 1.5px solid rgba(255,255,255,0.2);
+      background: transparent;
+      color: rgba(255,255,255,0.55);
+      transition: all 0.2s;
+    }
+
+    .video-tab:hover {
+      border-color: rgba(255,255,255,0.4);
+      color: rgba(255,255,255,0.85);
+    }
+
+    .video-tab.active {
+      background: rgba(255,255,255,0.12);
+      border-color: rgba(255,255,255,0.5);
+      color: var(--white);
+    }
+
     /* ─── FINAL CTA ────────────────────────────────────────────────── */
     .final-cta {
       padding: 100px 0;
@@ -1831,18 +1863,24 @@
         <span style="width:6px;height:6px;background:rgba(255,255,255,0.6);border-radius:50%;display:inline-block;"></span>
         See it in action
       </div>
-      <h2>Four minutes.<br>The whole picture.</h2>
-      <p>Watch a full walkthrough of Revenue, People, and Operations — and see exactly what it looks like when your studio runs on data, not gut feel.</p>
+      <h2>See the platform.<br><em style="font-style:italic;color:var(--sage-lt);">Both sides of it.</em></h2>
+      <p>Watch a walkthrough of each module — choose where you want to start.</p>
 
-      <!-- VIDEO PLACEHOLDER — replace data-video-id with your YouTube/Loom ID -->
-      <div class="video-frame" id="videoFrame" data-video-id="YOUR_VIDEO_ID" data-video-type="youtube">
-        <div class="video-play-btn">
+      <!-- Video tabs -->
+      <div class="video-tabs">
+        <button class="video-tab active" onclick="switchVideo('owner')">Owner HQ</button>
+        <button class="video-tab" onclick="switchVideo('staff')">Staff HQ</button>
+      </div>
+
+      <!-- Video frame -->
+      <div class="video-frame" id="videoFrame">
+        <div class="video-play-btn" id="videoPlayBtn">
           <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <polygon points="5,3 19,12 5,21"/>
           </svg>
         </div>
       </div>
-      <p class="video-caption">No sales call required. Just watch.</p>
+      <p class="video-caption" id="videoCaption">Owner HQ — Revenue, Operations, and owner-level clarity.</p>
     </div>
   </section>
 
@@ -1937,30 +1975,60 @@
 
     fadeEls.forEach(el => observer.observe(el));
 
-    // ── Video embed on click
-    const videoFrame = document.getElementById('videoFrame');
-    if (videoFrame) {
-      videoFrame.addEventListener('click', () => {
-        const videoId = videoFrame.dataset.videoId;
-        const videoType = videoFrame.dataset.videoType;
+    // ── Video tabs
+    const videos = {
+      owner: {
+        id:      'RWB6fFknfXg',
+        caption: 'Owner HQ — Revenue, Operations, and owner-level clarity.'
+      },
+      staff: {
+        id:      'Dlxsp5Ia2JQ',
+        caption: 'Staff HQ — Onboarding, checklists, KPIs, and team tools.'
+      }
+    };
 
-        if (!videoId || videoId === 'YOUR_VIDEO_ID') {
-          alert('Add your video ID to the data-video-id attribute on the #videoFrame element.');
-          return;
-        }
+    let activeVideo = 'owner';
+    let videoPlaying = false;
 
-        let src = '';
-        if (videoType === 'youtube') {
-          src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
-        } else if (videoType === 'loom') {
-          src = `https://www.loom.com/embed/${videoId}?autoplay=1`;
-        }
+    function switchVideo(key) {
+      if (key === activeVideo && videoPlaying) return;
+      activeVideo  = key;
+      videoPlaying = false;
 
-        if (src) {
-          videoFrame.innerHTML = `<iframe src="${src}" allow="autoplay; fullscreen" allowfullscreen></iframe>`;
+      // Update tabs
+      document.querySelectorAll('.video-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.video-tab').forEach(t => {
+        if (t.textContent.toLowerCase().includes(key === 'owner' ? 'owner' : 'staff')) {
+          t.classList.add('active');
         }
       });
+
+      // Reset frame to play button
+      const frame = document.getElementById('videoFrame');
+      frame.innerHTML = `
+        <div class="video-play-btn" id="videoPlayBtn">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <polygon points="5,3 19,12 5,21"/>
+          </svg>
+        </div>`;
+
+      // Update caption
+      document.getElementById('videoCaption').textContent = videos[key].caption;
+
+      // Re-attach click
+      frame.onclick = () => playVideo(key);
     }
+
+    function playVideo(key) {
+      videoPlaying = true;
+      const frame = document.getElementById('videoFrame');
+      const src   = `https://www.youtube.com/embed/${videos[key].id}?autoplay=1&rel=0`;
+      frame.innerHTML = `<iframe src="${src}" allow="autoplay; fullscreen" allowfullscreen></iframe>`;
+      frame.onclick   = null;
+    }
+
+    // Init click handler
+    document.getElementById('videoFrame').onclick = () => playVideo(activeVideo);
   </script>
 
 </body>
