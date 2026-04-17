@@ -193,8 +193,89 @@
 
     .nav-cta { display: flex; align-items: center; gap: 12px; }
 
+    /* ─── HAMBURGER ────────────────────────────────────────────────── */
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 36px;
+      height: 36px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+      border-radius: 6px;
+      transition: background 0.2s;
+    }
+    .nav-hamburger:hover { background: var(--sand-lt); }
+    .nav-hamburger span {
+      display: block;
+      height: 2px;
+      background: var(--forest);
+      border-radius: 2px;
+      transition: transform 0.25s ease, opacity 0.25s ease, width 0.25s ease;
+      transform-origin: center;
+    }
+    .nav-hamburger span:nth-child(2) { width: 70%; }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; width: 100%; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* ─── MOBILE DRAWER ────────────────────────────────────────────── */
+    .nav-drawer {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      z-index: 99;
+      pointer-events: none;
+    }
+    .nav-drawer.open { display: block; pointer-events: auto; }
+
+    .nav-drawer-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(30, 41, 59, 0.4);
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+    .nav-drawer.open .nav-drawer-overlay { opacity: 1; }
+
+    .nav-drawer-panel {
+      position: absolute;
+      top: 0; right: 0;
+      width: 280px;
+      height: 100%;
+      background: var(--white);
+      box-shadow: -8px 0 40px rgba(30, 41, 59, 0.12);
+      transform: translateX(100%);
+      transition: transform 0.28s ease;
+      display: flex;
+      flex-direction: column;
+      padding: 80px 28px 40px;
+      gap: 6px;
+    }
+    .nav-drawer.open .nav-drawer-panel { transform: none; }
+
+    .nav-drawer-panel a {
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--gray);
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+      transition: color 0.18s;
+    }
+    .nav-drawer-panel a:hover, .nav-drawer-panel a.active { color: var(--forest); }
+    .nav-drawer-panel a:last-of-type { border-bottom: none; }
+
+    .nav-drawer-cta {
+      margin-top: 24px;
+    }
+
     @media (max-width: 768px) {
       .nav-links { display: none; }
+      .nav-cta { display: none; }
+      .nav-hamburger { display: flex; }
     }
 
     /* ─── HERO ─────────────────────────────────────────────────────── */
@@ -1265,8 +1346,29 @@
           Watch Demo
         </a>
       </div>
+      <button class="nav-hamburger" id="hamburger" aria-label="Open menu" onclick="toggleDrawer()">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </nav>
+
+  <!-- Mobile nav drawer -->
+  <div class="nav-drawer" id="nav-drawer">
+    <div class="nav-drawer-overlay" onclick="toggleDrawer()"></div>
+    <div class="nav-drawer-panel">
+      <a href="#revenue" onclick="toggleDrawer()">Revenue</a>
+      <a href="#people" onclick="toggleDrawer()">People</a>
+      <a href="#operations" onclick="toggleDrawer()">Operations</a>
+      <a href="pricing.html">Pricing</a>
+      <a href="calculator.html">Calculator</a>
+      <a href="#demo" onclick="toggleDrawer()">Watch Demo</a>
+      <div class="nav-drawer-cta">
+        <a href="#demo" class="btn btn-primary" style="width:100%;justify-content:center;" onclick="toggleDrawer()">
+          <span class="play-icon"></span> Watch Demo
+        </a>
+      </div>
+    </div>
+  </div>
 
   <!-- ── HERO ─────────────────────────────────────────── -->
   <section class="hero">
@@ -1811,6 +1913,15 @@
 
   <!-- ── SCRIPTS ───────────────────────────────────────── -->
   <script>
+    // ── Mobile drawer
+    function toggleDrawer() {
+      const drawer = document.getElementById('nav-drawer');
+      const burger = document.getElementById('hamburger');
+      const open   = drawer.classList.toggle('open');
+      burger.classList.toggle('open', open);
+      document.body.style.overflow = open ? 'hidden' : '';
+    }
+
     // ── Navbar scroll effect
     const navbar = document.getElementById('navbar');
     window.addEventListener('scroll', () => {
