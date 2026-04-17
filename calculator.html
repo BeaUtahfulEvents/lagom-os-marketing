@@ -1,0 +1,1369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Value Calculator — LagomOS</title>
+  <meta name="description" content="See how much time, energy, and money you're spending working in your studio — and what you'd gain by working on it with LagomOS." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ─── Reset & Base ─────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ivory:    #F8FAFC;
+      --white:    #FFFFFF;
+      --forest:   #1E293B;
+      --sage:     #86AEAD;
+      --sage-lt:  #B4CFCE;
+      --sand:     #86AEAD;
+      --sand-lt:  #DFF0EF;
+      --charcoal: #1E293B;
+      --gray:     #64748B;
+      --gray-lt:  #94A3B8;
+      --border:   #E2E8F0;
+
+      --serif:  'Cormorant Garamond', Georgia, serif;
+      --sans:   'DM Sans', system-ui, sans-serif;
+
+      --max:    1140px;
+      --radius: 12px;
+      --shadow: 0 4px 32px rgba(30, 41, 59, 0.08);
+      --shadow-lg: 0 16px 64px rgba(30, 41, 59, 0.14);
+    }
+
+    html { scroll-behavior: smooth; font-size: 16px; }
+
+    body {
+      font-family: var(--sans);
+      background: var(--ivory);
+      color: var(--charcoal);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+
+    .container {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ─── Utility ──────────────────────────────────────────────────── */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--sand-lt);
+      color: var(--forest);
+      font-family: var(--sans);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 100px;
+    }
+
+    .badge-dot {
+      width: 6px; height: 6px;
+      background: var(--sage);
+      border-radius: 50%;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 28px;
+      border-radius: 8px;
+      font-family: var(--sans);
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: var(--forest);
+      color: var(--white);
+    }
+    .btn-primary:hover {
+      background: #122a1e;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 24px rgba(30, 41, 59, 0.25);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--forest);
+      border: 1.5px solid var(--forest);
+    }
+    .btn-outline:hover {
+      background: var(--forest);
+      color: var(--white);
+    }
+
+    .btn-sage {
+      background: var(--sage);
+      color: var(--white);
+    }
+    .btn-sage:hover {
+      background: #6e9a99;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 24px rgba(134, 174, 173, 0.35);
+    }
+
+    .btn-lg {
+      padding: 17px 36px;
+      font-size: 16px;
+    }
+
+    .play-icon {
+      width: 18px; height: 18px;
+      background: currentColor;
+      -webkit-mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpolygon points='5,3 19,12 5,21'/%3E%3C/svg%3E");
+      mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpolygon points='5,3 19,12 5,21'/%3E%3C/svg%3E");
+      -webkit-mask-repeat: no-repeat;
+      mask-repeat: no-repeat;
+      -webkit-mask-size: contain;
+      mask-size: contain;
+    }
+
+    /* ─── NAV ──────────────────────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 0;
+      transition: background 0.3s, box-shadow 0.3s;
+    }
+
+    nav.scrolled {
+      background: rgba(247, 245, 240, 0.96);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 1px 0 var(--border);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 20px 24px;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--serif);
+      font-size: 24px;
+      font-weight: 500;
+      color: var(--forest);
+      letter-spacing: -0.02em;
+    }
+    .nav-logo img { display: block; flex-shrink: 0; }
+    .nav-logo .wordmark { color: var(--forest); }
+    .nav-logo .wordmark .os { color: var(--sage); }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 36px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--gray);
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--forest); }
+    .nav-links a.active { color: var(--forest); }
+
+    .nav-cta { display: flex; align-items: center; gap: 12px; }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+    }
+
+    /* ─── PAGE HERO ────────────────────────────────────────────────── */
+    .calc-hero {
+      padding: 140px 0 64px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .calc-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 70% 60% at 50% 30%, rgba(134, 174, 173, 0.09) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .calc-hero .eyebrow {
+      margin-bottom: 20px;
+    }
+
+    .calc-hero h1 {
+      font-family: var(--serif);
+      font-size: clamp(36px, 5vw, 58px);
+      font-weight: 500;
+      line-height: 1.1;
+      color: var(--forest);
+      letter-spacing: -0.02em;
+      margin-bottom: 18px;
+    }
+
+    .calc-hero h1 em {
+      font-style: italic;
+      color: var(--sage);
+    }
+
+    .calc-hero p {
+      font-size: 17px;
+      color: var(--gray);
+      max-width: 520px;
+      margin: 0 auto;
+      line-height: 1.65;
+    }
+
+    /* ─── CALCULATOR LAYOUT ────────────────────────────────────────── */
+    .calc-section {
+      padding: 0 0 80px;
+    }
+
+    .calc-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 40px;
+      align-items: start;
+      transition: grid-template-columns 0.4s ease;
+    }
+
+    .calc-grid.results-visible {
+      grid-template-columns: 1fr 420px;
+    }
+
+    @media (max-width: 900px) {
+      .calc-grid.results-visible {
+        grid-template-columns: 1fr;
+      }
+
+      .results-panel {
+        order: -1;
+      }
+    }
+
+    /* ─── INPUT PANEL ──────────────────────────────────────────────── */
+    .inputs-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    .input-group {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+    }
+
+    .input-group-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--sage);
+      margin-bottom: 18px;
+    }
+
+    .input-row {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 20px;
+    }
+
+    .input-row:last-child {
+      margin-bottom: 0;
+    }
+
+    .input-label {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+
+    .input-label span:first-child {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--charcoal);
+    }
+
+    .input-value {
+      font-family: var(--serif);
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--forest);
+    }
+
+    /* Sliders */
+    input[type="range"] {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 4px;
+      background: var(--border);
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 18px;
+      height: 18px;
+      background: var(--forest);
+      border-radius: 50%;
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+
+    input[type="range"]::-webkit-slider-thumb:hover {
+      transform: scale(1.15);
+      box-shadow: 0 0 0 4px rgba(30, 41, 59, 0.1);
+    }
+
+    input[type="range"]::-moz-range-thumb {
+      width: 18px;
+      height: 18px;
+      background: var(--forest);
+      border-radius: 50%;
+      cursor: pointer;
+      border: none;
+    }
+
+    .slider-track {
+      position: relative;
+    }
+
+    .slider-labels {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 4px;
+    }
+
+    .slider-labels span {
+      font-size: 11px;
+      color: var(--gray-lt);
+    }
+
+    /* Toggle */
+    .toggle-group {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .toggle-btn {
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      font-family: var(--sans);
+      border: 1.5px solid var(--border);
+      background: var(--white);
+      color: var(--gray);
+      cursor: pointer;
+      transition: all 0.18s;
+    }
+
+    .toggle-btn:hover {
+      border-color: var(--sage-lt);
+      color: var(--forest);
+    }
+
+    .toggle-btn.selected {
+      background: var(--sand-lt);
+      border-color: var(--sage);
+      color: var(--forest);
+      font-weight: 600;
+    }
+
+    /* ─── SUBMIT BUTTON ────────────────────────────────────────────── */
+    .calc-submit-wrap {
+      margin-top: 8px;
+    }
+
+    .btn-calc-submit {
+      width: 100%;
+      justify-content: center;
+      padding: 18px 36px;
+      font-size: 16px;
+      font-weight: 600;
+      background: var(--forest);
+      color: var(--white);
+      border: none;
+      border-radius: 10px;
+      font-family: var(--sans);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn-calc-submit:hover {
+      background: #122a1e;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 24px rgba(30, 41, 59, 0.25);
+    }
+
+    .btn-calc-submit .arrow {
+      font-size: 18px;
+      transition: transform 0.2s;
+    }
+
+    .btn-calc-submit:hover .arrow {
+      transform: translateX(4px);
+    }
+
+    /* ─── RESULTS PANEL ────────────────────────────────────────────── */
+    .results-panel {
+      position: sticky;
+      top: 100px;
+      display: none;
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.45s ease, transform 0.45s ease;
+    }
+
+    .results-panel.visible {
+      display: block;
+    }
+
+    .results-panel.animated {
+      opacity: 1;
+      transform: none;
+    }
+
+    .results-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .results-header {
+      background: var(--forest);
+      color: var(--white);
+      padding: 20px 24px;
+    }
+
+    .results-header p {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--sage-lt);
+      margin-bottom: 4px;
+    }
+
+    .results-header h3 {
+      font-family: var(--serif);
+      font-size: 22px;
+      font-weight: 500;
+      color: var(--white);
+    }
+
+    /* Comparison table */
+    .comparison {
+      padding: 0;
+    }
+
+    .comparison-head {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .comp-col-label {
+      padding: 12px 20px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .comp-col-label.in {
+      color: var(--gray);
+      border-right: 1px solid var(--border);
+    }
+
+    .comp-col-label.on {
+      color: var(--sage);
+    }
+
+    .comp-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .comp-row:last-child {
+      border-bottom: none;
+    }
+
+    .comp-cell {
+      padding: 14px 20px;
+    }
+
+    .comp-cell.in-cell {
+      border-right: 1px solid var(--border);
+      background: rgba(248, 250, 252, 0.6);
+    }
+
+    .comp-cell.on-cell {
+      background: rgba(223, 240, 239, 0.25);
+    }
+
+    .comp-cell-label {
+      font-size: 11px;
+      color: var(--gray-lt);
+      margin-bottom: 2px;
+    }
+
+    .comp-cell-value {
+      font-family: var(--serif);
+      font-size: 20px;
+      font-weight: 500;
+      color: var(--forest);
+      line-height: 1.2;
+    }
+
+    .comp-cell-value.highlight {
+      color: var(--sage);
+    }
+
+    .comp-cell-value.negative {
+      color: #C94040;
+    }
+
+    /* Payback banner */
+    .payback-banner {
+      padding: 16px 20px;
+      background: var(--sand-lt);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .payback-label {
+      font-size: 13px;
+      color: var(--forest);
+      font-weight: 500;
+    }
+
+    .payback-value {
+      font-family: var(--serif);
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--forest);
+      white-space: nowrap;
+    }
+
+    /* ROI total */
+    .roi-total {
+      padding: 20px 24px;
+      border-top: 1px solid var(--border);
+    }
+
+    .roi-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 6px;
+    }
+
+    .roi-row:last-child { margin-bottom: 0; }
+
+    .roi-label {
+      font-size: 13px;
+      color: var(--gray);
+    }
+
+    .roi-amount {
+      font-family: var(--serif);
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--forest);
+    }
+
+    .roi-amount.big {
+      font-size: 26px;
+      color: var(--sage);
+    }
+
+    .roi-divider {
+      height: 1px;
+      background: var(--border);
+      margin: 12px 0;
+    }
+
+    /* Anchor note */
+    .anchor-note {
+      padding: 14px 20px;
+      border-top: 1px solid var(--border);
+      font-size: 12px;
+      color: var(--gray);
+      line-height: 1.5;
+    }
+
+    .anchor-note strong {
+      color: var(--forest);
+      font-weight: 600;
+    }
+
+    /* CTA block */
+    .results-cta {
+      padding: 20px 24px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .email-row {
+      display: flex;
+      gap: 8px;
+    }
+
+    .email-input {
+      flex: 1;
+      padding: 11px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      font-family: var(--sans);
+      font-size: 14px;
+      color: var(--charcoal);
+      background: var(--white);
+      outline: none;
+      transition: border-color 0.18s;
+    }
+
+    .email-input::placeholder {
+      color: var(--gray-lt);
+    }
+
+    .email-input:focus {
+      border-color: var(--sage);
+    }
+
+    .email-submit {
+      padding: 11px 18px;
+      background: var(--sage);
+      color: var(--white);
+      border: none;
+      border-radius: 8px;
+      font-family: var(--sans);
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.18s;
+    }
+
+    .email-submit:hover {
+      background: #6e9a99;
+    }
+
+    .email-note {
+      font-size: 11px;
+      color: var(--gray-lt);
+      text-align: center;
+    }
+
+    .cta-divider {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 11px;
+      color: var(--gray-lt);
+    }
+
+    .cta-divider::before,
+    .cta-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ─── BIRCH DECORATION ─────────────────────────────────────────── */
+    .birch-deco {
+      position: absolute;
+      pointer-events: none;
+      user-select: none;
+      overflow: visible;
+      z-index: 0;
+    }
+
+    @media (max-width: 768px) {
+      .birch-deco { display: none; }
+    }
+
+    /* ─── FOOTER CTA ───────────────────────────────────────────────── */
+    .final-cta {
+      background: var(--forest);
+      padding: 96px 0;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .final-cta h2 {
+      font-family: var(--serif);
+      font-size: clamp(32px, 4vw, 48px);
+      font-weight: 500;
+      color: var(--white);
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+    }
+
+    .final-cta h2 em {
+      font-style: italic;
+      color: var(--sage-lt);
+    }
+
+    .final-cta p {
+      font-size: 16px;
+      color: rgba(255,255,255,0.65);
+      max-width: 480px;
+      margin: 0 auto 36px;
+    }
+
+    .final-cta-btns {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-ghost {
+      background: rgba(255,255,255,0.1);
+      color: var(--white);
+      border: 1.5px solid rgba(255,255,255,0.25);
+    }
+
+    .btn-ghost:hover {
+      background: rgba(255,255,255,0.2);
+    }
+
+    /* ─── FOOTER ───────────────────────────────────────────────────── */
+    footer {
+      padding: 40px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--serif);
+      font-size: 20px;
+      color: var(--forest);
+      font-weight: 500;
+    }
+    .footer-logo img { display: block; flex-shrink: 0; }
+    .footer-logo .wordmark { color: var(--forest); }
+    .footer-logo .wordmark .os { color: var(--sage); }
+
+    .footer-tagline {
+      font-size: 12px;
+      color: var(--gray-lt);
+      margin-top: 4px;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 24px;
+      list-style: none;
+    }
+
+    .footer-links a {
+      font-size: 13px;
+      color: var(--gray-lt);
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--charcoal); }
+
+    .footer-copy {
+      font-size: 12px;
+      color: var(--gray-lt);
+    }
+
+    /* ─── ANIMATIONS ───────────────────────────────────────────────── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .fade-up.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    .fade-up-delay-1 { transition-delay: 0.1s; }
+    .fade-up-delay-2 { transition-delay: 0.2s; }
+
+    /* ─── STANDALONE TOGGLE ANSWER ─────────────────────────────────── */
+    .solo-note {
+      font-size: 12px;
+      color: var(--gray);
+      margin-top: 8px;
+      line-height: 1.5;
+    }
+
+    .solo-note.hidden { display: none; }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAV ──────────────────────────────────────────── -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo"><img src="logo-leaf.svg" height="36" alt="LagomOS mark"><span class="wordmark">Lagom<span class="os">OS</span></span></a>
+      <ul class="nav-links">
+        <li><a href="index.html#revenue">Revenue</a></li>
+        <li><a href="index.html#people">People</a></li>
+        <li><a href="index.html#operations">Operations</a></li>
+        <li><a href="pricing.html">Pricing</a></li>
+        <li><a href="calculator.html" class="active">Calculator</a></li>
+      </ul>
+      <div class="nav-cta">
+        <a href="index.html#demo" class="btn btn-primary">
+          <span class="play-icon"></span>
+          Watch Demo
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ── HERO ─────────────────────────────────────────── -->
+  <section class="calc-hero">
+    <!-- Birch decoration -->
+    <svg class="birch-deco" aria-hidden="true" viewBox="20 -440 310 445" preserveAspectRatio="xMaxYMax meet" style="right:0;bottom:0;height:80%;color:#86AEAD;">
+      <g transform="translate(265,0)" fill="none" stroke="currentColor" opacity=".10">
+        <path d="M-7,0C-8,-80-9,-160-7,-240C-5,-320-6,-375-4,-418L4,-418C6,-375,5,-320,7,-240C9,-160,8,-80,7,0Z" fill="currentColor" stroke="none"/>
+        <line x1="-7" y1="-85" x2="6" y2="-87" stroke-width="2.5" stroke-linecap="round" opacity=".5"/>
+        <line x1="-7" y1="-162" x2="6" y2="-160" stroke-width="2" stroke-linecap="round" opacity=".45"/>
+        <line x1="-6" y1="-242" x2="5" y2="-244" stroke-width="1.5" stroke-linecap="round" opacity=".4"/>
+        <line x1="-7" y1="-150" x2="-52" y2="-200" stroke-width="4" stroke-linecap="round"/>
+        <line x1="7" y1="-200" x2="50" y2="-250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="-7" y1="-268" x2="-40" y2="-318" stroke-width="3" stroke-linecap="round"/>
+        <line x1="7" y1="-308" x2="38" y2="-354" stroke-width="2.5" stroke-linecap="round"/>
+      </g>
+      <g transform="translate(162,0) scale(.78)" fill="none" stroke="currentColor" opacity=".06">
+        <path d="M-7,0C-8,-80-9,-160-7,-240C-5,-320-6,-375-4,-418L4,-418C6,-375,5,-320,7,-240C9,-160,8,-80,7,0Z" fill="currentColor" stroke="none"/>
+        <line x1="-7" y1="-85" x2="6" y2="-87" stroke-width="2.5" stroke-linecap="round" opacity=".5"/>
+        <line x1="-7" y1="-162" x2="6" y2="-160" stroke-width="2" stroke-linecap="round" opacity=".45"/>
+        <line x1="-7" y1="-150" x2="-52" y2="-200" stroke-width="4" stroke-linecap="round"/>
+        <line x1="7" y1="-200" x2="50" y2="-250" stroke-width="4" stroke-linecap="round"/>
+      </g>
+    </svg>
+
+    <div class="container" style="position:relative;z-index:1;">
+      <div class="eyebrow fade-up">
+        <span class="badge"><span class="badge-dot"></span>Value Calculator</span>
+      </div>
+      <h1 class="fade-up fade-up-delay-1">How much does<br><em>working in</em> your studio cost?</h1>
+      <p class="fade-up fade-up-delay-2">Plug in your numbers. See what you're spending — in time and money — running operations manually. Then see what shifts when that clarity is built in.</p>
+    </div>
+  </section>
+
+  <!-- ── CALCULATOR ────────────────────────────────────── -->
+  <section class="calc-section">
+    <div class="container">
+      <div class="calc-grid" id="calc-grid">
+
+        <!-- LEFT: Inputs -->
+        <div class="inputs-panel">
+
+          <!-- Group 1: Your Studio -->
+          <div class="input-group fade-up">
+            <div class="input-group-label">Your Studio</div>
+
+            <div class="input-row">
+              <div class="input-label">
+                <span>Monthly revenue</span>
+                <span class="input-value" id="val-revenue">$20,000</span>
+              </div>
+              <div class="slider-track">
+                <input type="range" id="revenue" min="5000" max="100000" step="1000" value="52000" oninput="update()">
+              </div>
+              <div class="slider-labels"><span>$5k</span><span>$100k</span></div>
+            </div>
+
+            <div class="input-row">
+              <div class="input-label">
+                <span>Your effective hourly rate</span>
+                <span class="input-value" id="val-rate">$75/hr</span>
+              </div>
+              <div class="slider-track">
+                <input type="range" id="rate" min="30" max="250" step="5" value="140" oninput="update()">
+              </div>
+              <div class="slider-labels"><span>$30</span><span>$250</span></div>
+            </div>
+          </div>
+
+          <!-- Group 2: Your Time -->
+          <div class="input-group fade-up fade-up-delay-1">
+            <div class="input-group-label">Your Time</div>
+
+            <div class="input-row">
+              <div class="input-label">
+                <span>Hours/week on reports &amp; spreadsheets</span>
+                <span class="input-value" id="val-report-hrs">4 hrs</span>
+              </div>
+              <div class="slider-track">
+                <input type="range" id="report-hrs" min="0" max="20" step="0.5" value="10" oninput="update()">
+              </div>
+              <div class="slider-labels"><span>0</span><span>20 hrs</span></div>
+            </div>
+
+            <div class="input-row">
+              <div class="input-label">
+                <span>Hours/week answering staff questions you shouldn't be</span>
+                <span class="input-value" id="val-staff-hrs">3 hrs</span>
+              </div>
+              <div class="slider-track">
+                <input type="range" id="staff-hrs" min="0" max="15" step="0.5" value="7.5" oninput="update()">
+              </div>
+              <div class="slider-labels"><span>0</span><span>15 hrs</span></div>
+            </div>
+          </div>
+
+          <!-- Group 3: Your Team -->
+          <div class="input-group fade-up fade-up-delay-1">
+            <div class="input-group-label">Your Team</div>
+
+            <div class="input-row">
+              <div class="input-label">
+                <span>Hours you spend onboarding each new hire</span>
+                <span class="input-value" id="val-onboard-hrs">6 hrs</span>
+              </div>
+              <div class="slider-track">
+                <input type="range" id="onboard-hrs" min="1" max="30" step="1" value="16" oninput="update()">
+              </div>
+              <div class="slider-labels"><span>1 hr</span><span>30 hrs</span></div>
+            </div>
+
+            <div class="input-row">
+              <div class="input-label">
+                <span>New hires per year</span>
+                <span class="input-value" id="val-hires">4</span>
+              </div>
+              <div class="slider-track">
+                <input type="range" id="hires" min="0" max="20" step="1" value="10" oninput="update()">
+              </div>
+              <div class="slider-labels"><span>0</span><span>20</span></div>
+            </div>
+          </div>
+
+          <!-- Group 4: Operations -->
+          <div class="input-group fade-up fade-up-delay-2">
+            <div class="input-group-label">Operations</div>
+
+            <div class="input-row">
+              <div class="input-label">
+                <span>Supply stockouts in the last 6 months</span>
+                <span class="input-value" id="val-stockouts">3</span>
+              </div>
+              <div class="slider-track">
+                <input type="range" id="stockouts" min="0" max="24" step="1" value="12" oninput="update()">
+              </div>
+              <div class="slider-labels"><span>0</span><span>24</span></div>
+            </div>
+
+            <div class="input-row">
+              <div class="input-label">
+                <span>Can your studio run a full day without you?</span>
+              </div>
+              <div class="toggle-group" id="solo-toggle">
+                <button class="toggle-btn selected" data-val="yes" onclick="selectToggle(this,'solo-toggle')">Yes, fully</button>
+                <button class="toggle-btn" data-val="mostly" onclick="selectToggle(this,'solo-toggle')">Mostly</button>
+                <button class="toggle-btn" data-val="no" onclick="selectToggle(this,'solo-toggle')">Not really</button>
+              </div>
+              <p class="solo-note hidden" id="solo-note-mostly">Your presence is still the operating system. That's a risk — and a ceiling.</p>
+              <p class="solo-note hidden" id="solo-note-no">Every hour you're on-site is an hour you're not building. LagomOS is built to fix this.</p>
+            </div>
+          </div>
+
+          <!-- Group 5: Clarity Anchor -->
+          <div class="input-group fade-up fade-up-delay-2">
+            <div class="input-group-label">What's It Worth to You?</div>
+
+            <div class="input-row">
+              <div class="input-label">
+                <span>What would real-time clarity into your studio be worth, per month?</span>
+                <span class="input-value" id="val-anchor">$200/mo</span>
+              </div>
+              <div class="slider-track">
+                <input type="range" id="anchor" min="0" max="1000" step="25" value="500" oninput="update()">
+              </div>
+              <div class="slider-labels"><span>$0</span><span>$1,000</span></div>
+            </div>
+          </div>
+
+          <!-- Submit -->
+          <div class="calc-submit-wrap fade-up fade-up-delay-2">
+            <button class="btn-calc-submit" onclick="showResults()">
+              Calculate My Value <span class="arrow">→</span>
+            </button>
+          </div>
+
+        </div>
+
+        <!-- RIGHT: Results -->
+        <div class="results-panel" id="results-panel">
+          <div class="results-card">
+
+            <!-- Header -->
+            <div class="results-header">
+              <p>Your Annual Cost of Working IN</p>
+              <h3 id="res-total-cost">Calculating…</h3>
+            </div>
+
+            <!-- Comparison table -->
+            <div class="comparison">
+              <div class="comparison-head">
+                <div class="comp-col-label in">Working IN</div>
+                <div class="comp-col-label on">Working ON</div>
+              </div>
+
+              <div class="comp-row">
+                <div class="comp-cell in-cell">
+                  <div class="comp-cell-label">Time lost to admin</div>
+                  <div class="comp-cell-value negative" id="in-admin">—</div>
+                </div>
+                <div class="comp-cell on-cell">
+                  <div class="comp-cell-label">Hours reclaimed</div>
+                  <div class="comp-cell-value highlight" id="on-admin">—</div>
+                </div>
+              </div>
+
+              <div class="comp-row">
+                <div class="comp-cell in-cell">
+                  <div class="comp-cell-label">Onboarding time cost</div>
+                  <div class="comp-cell-value negative" id="in-onboard">—</div>
+                </div>
+                <div class="comp-cell on-cell">
+                  <div class="comp-cell-label">With staff playbooks</div>
+                  <div class="comp-cell-value highlight" id="on-onboard">—</div>
+                </div>
+              </div>
+
+              <div class="comp-row">
+                <div class="comp-cell in-cell">
+                  <div class="comp-cell-label">Stockout disruptions</div>
+                  <div class="comp-cell-value negative" id="in-stock">—</div>
+                </div>
+                <div class="comp-cell on-cell">
+                  <div class="comp-cell-label">Proactive inventory</div>
+                  <div class="comp-cell-value highlight" id="on-stock">Tracked</div>
+                </div>
+              </div>
+
+              <div class="comp-row">
+                <div class="comp-cell in-cell">
+                  <div class="comp-cell-label">Revenue blind spots</div>
+                  <div class="comp-cell-value negative" id="in-rev">—</div>
+                </div>
+                <div class="comp-cell on-cell">
+                  <div class="comp-cell-label">Recovered with visibility</div>
+                  <div class="comp-cell-value highlight" id="on-rev">—</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Payback -->
+            <div class="payback-banner">
+              <span class="payback-label">LagomOS pays for itself in</span>
+              <span class="payback-value" id="res-payback">—</span>
+            </div>
+
+            <!-- ROI total -->
+            <div class="roi-total">
+              <div class="roi-row">
+                <span class="roi-label">Total annual cost (status quo)</span>
+                <span class="roi-amount" id="roi-gross">—</span>
+              </div>
+              <div class="roi-row">
+                <span class="roi-label">LagomOS annual investment</span>
+                <span class="roi-amount">$4,788/yr</span>
+              </div>
+              <div class="roi-divider"></div>
+              <div class="roi-row">
+                <span class="roi-label">Net annual value</span>
+                <span class="roi-amount big" id="roi-net">—</span>
+              </div>
+            </div>
+
+            <!-- Anchor note -->
+            <div class="anchor-note" id="anchor-note">
+              You said real-time clarity is worth <strong id="anchor-display">$200/mo</strong> — LagomOS costs <strong>$399/mo</strong>. The gap closes fast once you account for the time it gives back.
+            </div>
+
+            <!-- CTA -->
+            <div class="results-cta">
+              <p style="font-size:13px;color:var(--gray);text-align:center;">Want your full breakdown? Drop your email — we'll send it over.</p>
+              <div class="email-row">
+                <input type="email" class="email-input" id="email-input" placeholder="your@email.com">
+                <button class="email-submit" onclick="submitEmail()">Send it</button>
+              </div>
+              <p class="email-note">No spam. No pitch decks. Just your numbers.</p>
+              <div class="cta-divider">or</div>
+              <a href="mailto:sales@lagomos.com?subject=Discovery%20Call%20Request&body=I%20used%20the%20value%20calculator%20and%20want%20to%20learn%20more." class="btn btn-primary btn-lg" style="width:100%;justify-content:center;">Book a Discovery Call</a>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FINAL CTA ─────────────────────────────────────── -->
+  <section class="final-cta">
+    <!-- Birch decoration -->
+    <svg class="birch-deco" aria-hidden="true" viewBox="20 -440 280 445" preserveAspectRatio="xMaxYMax meet" style="right:0;bottom:0;height:90%;color:#86AEAD;">
+      <g transform="translate(240,0)" fill="none" stroke="currentColor" opacity=".11">
+        <path d="M-7,0C-8,-80-9,-160-7,-240C-5,-320-6,-375-4,-418L4,-418C6,-375,5,-320,7,-240C9,-160,8,-80,7,0Z" fill="currentColor" stroke="none"/>
+        <line x1="-7" y1="-150" x2="-52" y2="-200" stroke-width="4" stroke-linecap="round"/>
+        <line x1="7" y1="-200" x2="50" y2="-250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="-7" y1="-268" x2="-40" y2="-318" stroke-width="3" stroke-linecap="round"/>
+        <line x1="7" y1="-308" x2="38" y2="-354" stroke-width="2.5" stroke-linecap="round"/>
+      </g>
+      <g transform="translate(140,0) scale(.78)" fill="none" stroke="currentColor" opacity=".07">
+        <path d="M-7,0C-8,-80-9,-160-7,-240C-5,-320-6,-375-4,-418L4,-418C6,-375,5,-320,7,-240C9,-160,8,-80,7,0Z" fill="currentColor" stroke="none"/>
+        <line x1="-7" y1="-150" x2="-52" y2="-200" stroke-width="4" stroke-linecap="round"/>
+        <line x1="7" y1="-200" x2="50" y2="-250" stroke-width="4" stroke-linecap="round"/>
+      </g>
+    </svg>
+
+    <div class="container" style="position:relative;z-index:1;">
+      <h2>The numbers make sense.<br><em>Let's make it real.</em></h2>
+      <p>Most operators know something's slipping through the cracks. LagomOS shows you exactly what — and gives you the tools to close the gap.</p>
+      <div class="final-cta-btns">
+        <a href="mailto:sales@lagomos.com?subject=Discovery%20Call%20Request" class="btn btn-sage btn-lg">Book a Discovery Call</a>
+        <a href="pricing.html" class="btn btn-ghost btn-lg">See Pricing</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ────────────────────────────────────────── -->
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <div>
+          <div class="footer-logo"><img src="logo-leaf.svg" height="28" alt=""><span class="wordmark">Lagom<span class="os">OS</span></span></div>
+          <div class="footer-tagline">Operational intelligence for wellness studios</div>
+        </div>
+        <ul class="footer-links">
+          <li><a href="index.html#revenue">Revenue</a></li>
+          <li><a href="index.html#people">People</a></li>
+          <li><a href="index.html#operations">Operations</a></li>
+          <li><a href="index.html#demo">Demo</a></li>
+          <li><a href="mailto:sales@lagomos.com">Contact</a></li>
+        </ul>
+        <div class="footer-copy">© 2026 LagomOS. All rights reserved.</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ── SCRIPTS ───────────────────────────────────────── -->
+  <script>
+    // ── Navbar scroll effect
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 40);
+    });
+
+    // ── Fade-up observer
+    const fadeEls = document.querySelectorAll('.fade-up');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.08 });
+    fadeEls.forEach(el => observer.observe(el));
+
+    // ── Toggle buttons
+    function selectToggle(btn, groupId) {
+      document.querySelectorAll(`#${groupId} .toggle-btn`).forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+
+      // Show/hide solo notes
+      if (groupId === 'solo-toggle') {
+        const val = btn.dataset.val;
+        document.getElementById('solo-note-mostly').classList.toggle('hidden', val !== 'mostly');
+        document.getElementById('solo-note-no').classList.toggle('hidden', val !== 'no');
+      }
+      update();
+    }
+
+    // ── Formatting helpers
+    function fmt$(n) {
+      if (n >= 1000) return '$' + (n/1000).toFixed(n % 1000 === 0 ? 0 : 1) + 'k';
+      return '$' + Math.round(n).toLocaleString();
+    }
+
+    function fmtFull$(n) {
+      return '$' + Math.round(n).toLocaleString();
+    }
+
+    function fmtHrs(n) {
+      return Math.round(n).toLocaleString() + ' hrs/yr';
+    }
+
+    // ── Main update: reads sliders, updates displayed labels, recalculates if results are showing
+    function update() {
+      const revenue    = +document.getElementById('revenue').value;
+      const rate       = +document.getElementById('rate').value;
+      const reportHrs  = +document.getElementById('report-hrs').value;
+      const staffHrs   = +document.getElementById('staff-hrs').value;
+      const onboardHrs = +document.getElementById('onboard-hrs').value;
+      const hires      = +document.getElementById('hires').value;
+      const stockouts  = +document.getElementById('stockouts').value;
+      const anchor     = +document.getElementById('anchor').value;
+
+      // Always update the slider display labels
+      document.getElementById('val-revenue').textContent     = fmt$(revenue);
+      document.getElementById('val-rate').textContent        = '$' + rate + '/hr';
+      document.getElementById('val-report-hrs').textContent  = reportHrs + ' hrs';
+      document.getElementById('val-staff-hrs').textContent   = staffHrs + ' hrs';
+      document.getElementById('val-onboard-hrs').textContent = onboardHrs + ' hrs';
+      document.getElementById('val-hires').textContent       = hires;
+      document.getElementById('val-stockouts').textContent   = stockouts;
+      document.getElementById('val-anchor').textContent      = '$' + anchor + '/mo';
+
+      // Only recalculate results if already revealed
+      if (!resultsShown) return;
+
+      // ── Calculations
+      const adminCostAnnual   = (reportHrs + staffHrs) * rate * 52;
+      const onboardCostAnnual = onboardHrs * hires * rate;
+      const stockCostAnnual   = stockouts * 2 * 120;
+      const revClarityAnnual  = revenue * 12 * 0.02;
+
+      const totalCost   = adminCostAnnual + onboardCostAnnual + stockCostAnnual + revClarityAnnual;
+      const lagomAnnual = 399 * 12;
+      const netValue    = totalCost - lagomAnnual;
+
+      const weeklyValue  = totalCost / 52;
+      const paybackWeeks = weeklyValue > 0 ? Math.ceil(lagomAnnual / weeklyValue) : null;
+      const adminHrsYear = (reportHrs + staffHrs) * 52;
+      const onboardSaved = onboardCostAnnual * 0.6;
+
+      document.getElementById('res-total-cost').textContent = fmtFull$(totalCost) + '/yr';
+      document.getElementById('roi-gross').textContent      = fmtFull$(totalCost) + '/yr';
+      document.getElementById('roi-net').textContent        = fmtFull$(netValue) + '/yr';
+
+      document.getElementById('in-admin').textContent   = fmtFull$(adminCostAnnual) + '/yr';
+      document.getElementById('on-admin').textContent   = fmtHrs(adminHrsYear);
+      document.getElementById('in-onboard').textContent = fmtFull$(onboardCostAnnual) + '/yr';
+      document.getElementById('on-onboard').textContent = fmtFull$(onboardSaved) + ' saved';
+      document.getElementById('in-stock').textContent   = stockouts > 0 ? fmtFull$(stockCostAnnual) + '/yr' : '$0';
+      document.getElementById('in-rev').textContent     = fmtFull$(revClarityAnnual) + '/yr';
+      document.getElementById('on-rev').textContent     = fmtFull$(revClarityAnnual) + ' recovered';
+
+      if (paybackWeeks !== null && paybackWeeks < 104) {
+        document.getElementById('res-payback').textContent = paybackWeeks <= 1 ? 'under 1 week' : paybackWeeks + ' weeks';
+      } else {
+        document.getElementById('res-payback').textContent = '—';
+      }
+
+      document.getElementById('anchor-display').textContent = '$' + anchor + '/mo';
+      const anchorEl = document.getElementById('anchor-note');
+      if (anchor >= 399) {
+        anchorEl.innerHTML = 'You already see the value. At <strong>$399/mo</strong>, LagomOS is priced right where it belongs — and delivers far more than clarity alone.';
+      } else if (anchor === 0) {
+        anchorEl.innerHTML = 'Even if you value clarity at $0, the time and onboarding costs alone make LagomOS pay for itself quickly.';
+      } else {
+        anchorEl.innerHTML = `You said real-time clarity is worth <strong>$${anchor}/mo</strong> — LagomOS is <strong>$399/mo</strong>. The gap closes fast once you account for the time it gives back.`;
+      }
+    }
+
+    // ── Reveal results on submit
+    let resultsShown = false;
+
+    function showResults() {
+      resultsShown = true;
+      update(); // calculate once with current inputs
+
+      const panel = document.getElementById('results-panel');
+      const grid  = document.getElementById('calc-grid');
+
+      panel.classList.add('visible');
+      grid.classList.add('results-visible');
+
+      // Trigger animation on next frame
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          panel.classList.add('animated');
+          panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+      });
+
+      // Swap button to "Recalculate"
+      const btn = document.querySelector('.btn-calc-submit');
+      btn.innerHTML = 'Recalculate <span class="arrow">↻</span>';
+    }
+
+    // ── Email submit (placeholder — wire up to your CRM/Zapier/etc.)
+    function submitEmail() {
+      const email = document.getElementById('email-input').value.trim();
+      if (!email || !email.includes('@')) {
+        document.getElementById('email-input').focus();
+        return;
+      }
+      // Replace with your actual form submission / webhook
+      const btn = document.querySelector('.email-submit');
+      btn.textContent = 'Sent ✓';
+      btn.style.background = '#4CAF50';
+      btn.disabled = true;
+    }
+
+    // ── Init: populate slider labels without showing results
+    update();
+  </script>
+</body>
+</html>
