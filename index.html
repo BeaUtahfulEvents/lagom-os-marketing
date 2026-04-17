@@ -362,7 +362,117 @@
       flex-shrink: 0;
     }
 
-    /* ─── DASHBOARD PREVIEW ────────────────────────────────────────── */
+    /* ─── PLATFORM SCREENSHOTS ────────────────────────────────────── */
+    .screens-preview {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .screens-labels {
+      display: flex;
+      gap: 24px;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .screen-label {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--gray);
+    }
+
+    .screen-label-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .screen-label-dot.owner { background: var(--forest); }
+    .screen-label-dot.staff { background: var(--sage); }
+
+    .screens-stack {
+      position: relative;
+      height: 540px;
+    }
+
+    @media (max-width: 768px) {
+      .screens-stack { height: auto; }
+    }
+
+    .screen-card {
+      position: absolute;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(30, 41, 59, 0.18);
+      background: #1e1e2e;
+    }
+
+    .screen-back {
+      width: 72%;
+      right: 0;
+      top: 40px;
+      transform: rotate(1.5deg);
+      z-index: 1;
+      box-shadow: 0 12px 40px rgba(30, 41, 59, 0.12);
+    }
+
+    .screen-front {
+      width: 72%;
+      left: 0;
+      top: 0;
+      z-index: 2;
+      transform: rotate(-0.5deg);
+    }
+
+    @media (max-width: 768px) {
+      .screen-card { position: static; width: 100%; transform: none; margin-bottom: 16px; }
+      .screens-stack { display: flex; flex-direction: column; }
+    }
+
+    .screen-chrome {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 14px;
+      background: #2a2a3e;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .chrome-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .chrome-url {
+      flex: 1;
+      font-size: 10px;
+      color: rgba(255,255,255,0.35);
+      font-family: var(--sans);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      background: rgba(255,255,255,0.06);
+      border-radius: 4px;
+      padding: 3px 10px;
+      margin-left: 4px;
+    }
+
+    .screen-img {
+      display: block;
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+      object-position: top left;
+    }
+
+    /* ─── DASHBOARD PREVIEW (legacy, kept for reference) ──────────── */
     .dashboard-preview {
       margin: 0 auto;
       max-width: 960px;
@@ -1454,106 +1564,39 @@
     </div>
   </section>
 
-  <!-- ── DASHBOARD PREVIEW ─────────────────────────────── -->
+  <!-- ── PLATFORM PREVIEW ─────────────────────────────── -->
   <section style="padding: 0 0 100px;">
-    <div class="dashboard-preview fade-up">
-      <div class="dashboard-frame">
-        <!-- Browser chrome -->
-        <div class="dashboard-bar">
-          <div class="db-dot" style="background:#FF5F57;"></div>
-          <div class="db-dot" style="background:#FEBC2E;"></div>
-          <div class="db-dot" style="background:#28C840;"></div>
-          <div style="flex:1; background:#E2DDD6; border-radius:4px; height:22px; margin-left:12px; display:flex; align-items:center; padding: 0 12px;">
-            <span style="font-size:11px; color:#888;">app.lagom.os / dashboard</span>
-          </div>
+    <div class="screens-preview fade-up">
+      <!-- Labels above -->
+      <div class="screens-labels">
+        <div class="screen-label">
+          <span class="screen-label-dot owner"></span>Owner HQ
         </div>
-        <!-- App body -->
-        <div class="dashboard-body">
-          <!-- Sidebar -->
-          <div class="db-sidebar">
-            <div class="db-sidebar-logo">LAGOM<span style="opacity:0.6;">os</span></div>
-            <div class="db-nav-item active">
-              <div class="db-nav-dot"></div>
-              Revenue Insights
-            </div>
-            <div class="db-nav-item">
-              <div class="db-nav-dot"></div>
-              Admin Revenue
-            </div>
-            <div class="db-nav-item">
-              <div class="db-nav-dot"></div>
-              Staff Relations
-            </div>
-            <div class="db-nav-item">
-              <div class="db-nav-dot"></div>
-              Guest Relations
-            </div>
-            <div class="db-nav-item">
-              <div class="db-nav-dot"></div>
-              Owner View
-            </div>
-            <div class="db-nav-item">
-              <div class="db-nav-dot"></div>
-              Inventory
-            </div>
+        <div class="screen-label">
+          <span class="screen-label-dot staff"></span>Staff HQ
+        </div>
+      </div>
+      <!-- Overlapping screenshots -->
+      <div class="screens-stack">
+        <!-- Back: Staff HQ -->
+        <div class="screen-card screen-back">
+          <div class="screen-chrome">
+            <div class="chrome-dot" style="background:#FF5F57;"></div>
+            <div class="chrome-dot" style="background:#FEBC2E;"></div>
+            <div class="chrome-dot" style="background:#28C840;"></div>
+            <div class="chrome-url">coda.io / Staff HQ (Demo) · Key Progress Indicators</div>
           </div>
-          <!-- Main area -->
-          <div class="db-main">
-            <div class="db-header">
-              <div class="db-title">Revenue Insights</div>
-              <div class="db-date">MTD vs LMD vs Last Year</div>
-            </div>
-            <!-- KPIs -->
-            <div class="db-kpis">
-              <div class="kpi-card">
-                <div class="kpi-label">Sessions LMD</div>
-                <div class="kpi-value">$12.4k</div>
-                <div class="kpi-change">↑ 38% vs last year</div>
-              </div>
-              <div class="kpi-card">
-                <div class="kpi-label">Memberships LMD</div>
-                <div class="kpi-value">$13.7k</div>
-                <div class="kpi-change">↑ 42% vs last year</div>
-              </div>
-              <div class="kpi-card">
-                <div class="kpi-label">Members [New vs Cancel]</div>
-                <div class="kpi-value">+31</div>
-                <div class="kpi-change">Net new this month</div>
-              </div>
-              <div class="kpi-card">
-                <div class="kpi-label">Session Occupancy</div>
-                <div class="kpi-value">41%</div>
-                <div class="kpi-change neg">↓ Optimize scheduling</div>
-              </div>
-            </div>
-            <!-- Charts -->
-            <div class="db-charts">
-              <!-- Revenue chart -->
-              <div class="db-chart">
-                <div class="db-chart-title">Revenue trend · Last 30 days</div>
-                <svg class="chart-svg" height="120" viewBox="0 0 400 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <defs>
-                    <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stop-color="#86AEAD" stop-opacity="0.3"/>
-                      <stop offset="100%" stop-color="#86AEAD" stop-opacity="0"/>
-                    </linearGradient>
-                  </defs>
-                  <path d="M0,90 C30,85 50,70 80,65 C110,60 130,75 160,60 C190,45 210,40 240,35 C270,30 290,45 320,30 C350,15 370,20 400,10" stroke="#86AEAD" stroke-width="2.5" fill="none"/>
-                  <path d="M0,90 C30,85 50,70 80,65 C110,60 130,75 160,60 C190,45 210,40 240,35 C270,30 290,45 320,30 C350,15 370,20 400,10 L400,120 L0,120 Z" fill="url(#chartGrad)"/>
-                  <!-- X axis labels -->
-                  <text x="0" y="118" font-size="9" fill="#9A9A9A" font-family="DM Sans, sans-serif">Mar 1</text>
-                  <text x="160" y="118" font-size="9" fill="#9A9A9A" font-family="DM Sans, sans-serif">Mar 16</text>
-                  <text x="340" y="118" font-size="9" fill="#9A9A9A" font-family="DM Sans, sans-serif">Mar 31</text>
-                </svg>
-              </div>
-              <!-- Insight card -->
-              <div class="db-insight">
-                <div class="insight-tag">💡 LagomOS Insight</div>
-                <div class="insight-text">Punch Pass revenue dropped 68% since May. Your 10-visit pass is aging out — consider a relaunch promotion.</div>
-                <div class="insight-cta">View analysis →</div>
-              </div>
-            </div>
+          <img src="screenshot-staff-hq.png" alt="Staff HQ — Key Progress Indicators showing membership sales leaderboard" class="screen-img" />
+        </div>
+        <!-- Front: Owner HQ -->
+        <div class="screen-card screen-front">
+          <div class="screen-chrome">
+            <div class="chrome-dot" style="background:#FF5F57;"></div>
+            <div class="chrome-dot" style="background:#FEBC2E;"></div>
+            <div class="chrome-dot" style="background:#28C840;"></div>
+            <div class="chrome-url">coda.io / Owner HQ (Demo) · Revenue Insights</div>
           </div>
+          <img src="screenshot-owner-hq.png" alt="Owner HQ — Revenue Insights dashboard showing MTD, vs prior month, and year-over-year" class="screen-img" />
         </div>
       </div>
     </div>
