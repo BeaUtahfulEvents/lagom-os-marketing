@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>LAGOMos — The Operating System for Wellness Studios</title>
-  <meta name="description" content="LAGOMos gives sauna, plunge, and wellness studio owners the revenue intelligence, people systems, and operational clarity to stop running on gut feel — and start running on data." />
+  <title>LagomOS — The Operating System for Wellness Studios</title>
+  <meta name="description" content="LagomOS gives sauna, plunge, and wellness studio owners the revenue intelligence, people systems, and operational clarity to stop running on gut feel — and start running on data." />
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -163,16 +163,18 @@
     }
 
     .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
       font-family: var(--serif);
       font-size: 24px;
       font-weight: 500;
       color: var(--forest);
       letter-spacing: -0.02em;
     }
-
-    .nav-logo span {
-      color: var(--sage);
-    }
+    .nav-logo img { display: block; flex-shrink: 0; }
+    .nav-logo .wordmark { color: var(--forest); }
+    .nav-logo .wordmark .os { color: var(--sage); }
 
     .nav-links {
       display: flex;
@@ -629,6 +631,16 @@
 
     .feature-content {}
 
+    .feature-product-tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--sage);
+      margin-bottom: 6px;
+    }
+
     .feature-number {
       font-family: var(--serif);
       font-size: 72px;
@@ -935,7 +947,19 @@
     .final-cta {
       padding: 100px 0;
       text-align: center;
+      position: relative;
+      overflow: hidden;
     }
+
+    /* ─── BIRCH DECORATIONS ─────────────────────────────────────────── */
+    .birch-deco {
+      position: absolute;
+      pointer-events: none;
+      user-select: none;
+      overflow: visible;
+      z-index: 0;
+    }
+    @media (max-width: 768px) { .birch-deco { display: none; } }
 
     .final-cta h2 {
       font-family: var(--serif);
@@ -988,13 +1012,17 @@
     }
 
     .footer-logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
       font-family: var(--serif);
       font-size: 20px;
       color: var(--forest);
       font-weight: 500;
     }
-
-    .footer-logo span { color: var(--sage); }
+    .footer-logo img { display: block; flex-shrink: 0; }
+    .footer-logo .wordmark { color: var(--forest); }
+    .footer-logo .wordmark .os { color: var(--sage); }
 
     .footer-tagline {
       font-size: 12px;
@@ -1222,11 +1250,12 @@
   <!-- ── NAV ──────────────────────────────────────────── -->
   <nav id="navbar">
     <div class="nav-inner">
-      <a href="#" class="nav-logo">LAGOM<span>os</span></a>
+      <a href="#" class="nav-logo"><img src="logo-leaf.svg" height="36" alt="LagomOS mark"><span class="wordmark">Lagom<span class="os">OS</span></span></a>
       <ul class="nav-links">
         <li><a href="#revenue">Revenue</a></li>
         <li><a href="#people">People</a></li>
         <li><a href="#operations">Operations</a></li>
+        <li><a href="pricing.html">Pricing</a></li>
         <li><a href="#demo">Watch Demo</a></li>
       </ul>
       <div class="nav-cta">
@@ -1240,6 +1269,48 @@
 
   <!-- ── HERO ─────────────────────────────────────────── -->
   <section class="hero">
+    <!-- Birch grove decoration -->
+    <svg class="birch-deco" aria-hidden="true" viewBox="20 -440 310 445" preserveAspectRatio="xMaxYMax meet" style="right:0;bottom:0;height:88%;color:#86AEAD;">
+      <g transform="translate(265,0)" fill="none" stroke="currentColor" opacity=".13">
+        <path d="M-7,0C-8,-80-9,-160-7,-240C-5,-320-6,-375-4,-418L4,-418C6,-375,5,-320,7,-240C9,-160,8,-80,7,0Z" fill="currentColor" stroke="none"/>
+        <line x1="-7" y1="-85" x2="6" y2="-87" stroke-width="2.5" stroke-linecap="round" opacity=".5"/>
+        <line x1="-7" y1="-162" x2="6" y2="-160" stroke-width="2" stroke-linecap="round" opacity=".45"/>
+        <line x1="-6" y1="-242" x2="5" y2="-244" stroke-width="1.5" stroke-linecap="round" opacity=".4"/>
+        <line x1="-5" y1="-310" x2="5" y2="-308" stroke-width="1.5" stroke-linecap="round" opacity=".35"/>
+        <line x1="-7" y1="-150" x2="-52" y2="-200" stroke-width="4" stroke-linecap="round"/>
+        <line x1="7" y1="-200" x2="50" y2="-250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="-7" y1="-268" x2="-40" y2="-318" stroke-width="3" stroke-linecap="round"/>
+        <line x1="7" y1="-308" x2="38" y2="-354" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="-5" y1="-358" x2="-22" y2="-396" stroke-width="2" stroke-linecap="round"/>
+        <line x1="5" y1="-378" x2="20" y2="-414" stroke-width="1.5" stroke-linecap="round"/>
+      </g>
+      <g transform="translate(162,0) scale(.78)" fill="none" stroke="currentColor" opacity=".09">
+        <path d="M-7,0C-8,-80-9,-160-7,-240C-5,-320-6,-375-4,-418L4,-418C6,-375,5,-320,7,-240C9,-160,8,-80,7,0Z" fill="currentColor" stroke="none"/>
+        <line x1="-7" y1="-85" x2="6" y2="-87" stroke-width="2.5" stroke-linecap="round" opacity=".5"/>
+        <line x1="-7" y1="-162" x2="6" y2="-160" stroke-width="2" stroke-linecap="round" opacity=".45"/>
+        <line x1="-6" y1="-242" x2="5" y2="-244" stroke-width="1.5" stroke-linecap="round" opacity=".4"/>
+        <line x1="-5" y1="-310" x2="5" y2="-308" stroke-width="1.5" stroke-linecap="round" opacity=".35"/>
+        <line x1="-7" y1="-150" x2="-52" y2="-200" stroke-width="4" stroke-linecap="round"/>
+        <line x1="7" y1="-200" x2="50" y2="-250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="-7" y1="-268" x2="-40" y2="-318" stroke-width="3" stroke-linecap="round"/>
+        <line x1="7" y1="-308" x2="38" y2="-354" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="-5" y1="-358" x2="-22" y2="-396" stroke-width="2" stroke-linecap="round"/>
+        <line x1="5" y1="-378" x2="20" y2="-414" stroke-width="1.5" stroke-linecap="round"/>
+      </g>
+      <g transform="translate(70,0) scale(.58)" fill="none" stroke="currentColor" opacity=".06">
+        <path d="M-7,0C-8,-80-9,-160-7,-240C-5,-320-6,-375-4,-418L4,-418C6,-375,5,-320,7,-240C9,-160,8,-80,7,0Z" fill="currentColor" stroke="none"/>
+        <line x1="-7" y1="-85" x2="6" y2="-87" stroke-width="2.5" stroke-linecap="round" opacity=".5"/>
+        <line x1="-7" y1="-162" x2="6" y2="-160" stroke-width="2" stroke-linecap="round" opacity=".45"/>
+        <line x1="-6" y1="-242" x2="5" y2="-244" stroke-width="1.5" stroke-linecap="round" opacity=".4"/>
+        <line x1="-5" y1="-310" x2="5" y2="-308" stroke-width="1.5" stroke-linecap="round" opacity=".35"/>
+        <line x1="-7" y1="-150" x2="-52" y2="-200" stroke-width="4" stroke-linecap="round"/>
+        <line x1="7" y1="-200" x2="50" y2="-250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="-7" y1="-268" x2="-40" y2="-318" stroke-width="3" stroke-linecap="round"/>
+        <line x1="7" y1="-308" x2="38" y2="-354" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="-5" y1="-358" x2="-22" y2="-396" stroke-width="2" stroke-linecap="round"/>
+        <line x1="5" y1="-378" x2="20" y2="-414" stroke-width="1.5" stroke-linecap="round"/>
+      </g>
+    </svg>
     <div class="container">
       <div class="hero-eyebrow fade-up">
         <span class="badge"><span class="badge-dot"></span>Built by a studio owner, for studio owners</span>
@@ -1252,7 +1323,7 @@
       </h1>
 
       <p class="hero-sub fade-up fade-up-delay-2">
-        LAGOMos is the complete Revenue, People, and Operations platform for wellness studios — so your business runs with precision, with or without you in the room.
+        LagomOS is the complete Revenue, People, and Operations platform for wellness studios — so your business runs with precision, with or without you in the room.
       </p>
 
       <div class="hero-actions fade-up fade-up-delay-3">
@@ -1260,7 +1331,7 @@
           <span class="play-icon"></span>
           Watch the Demo
         </a>
-        <a href="mailto:hello@lagom.os" class="btn btn-outline btn-lg">Book a Discovery Call</a>
+        <a href="mailto:sales@lagomos.com" class="btn btn-outline btn-lg">Book a Discovery Call</a>
       </div>
 
       <div class="hero-social-proof fade-up fade-up-delay-4">
@@ -1274,7 +1345,7 @@
         </div>
         <div class="proof-item">
           <div class="proof-check">✓</div>
-          <span>You own it — not a subscription</span>
+          <span>Replaces the patchwork</span>
         </div>
       </div>
     </div>
@@ -1308,7 +1379,7 @@
             </div>
             <div class="db-nav-item">
               <div class="db-nav-dot"></div>
-              Host Relations
+              Staff Relations
             </div>
             <div class="db-nav-item">
               <div class="db-nav-dot"></div>
@@ -1374,7 +1445,7 @@
               </div>
               <!-- Insight card -->
               <div class="db-insight">
-                <div class="insight-tag">💡 LAGOMos Insight</div>
+                <div class="insight-tag">💡 LagomOS Insight</div>
                 <div class="insight-text">Punch Pass revenue dropped 68% since May. Your 10-visit pass is aging out — consider a relaunch promotion.</div>
                 <div class="insight-cta">View analysis →</div>
               </div>
@@ -1387,6 +1458,31 @@
 
   <!-- ── PAIN ──────────────────────────────────────────── -->
   <section class="pain" id="pain">
+    <svg class="birch-deco" aria-hidden="true" viewBox="-15 -440 230 445" preserveAspectRatio="xMinYMax meet" style="left:0;bottom:0;height:92%;color:white;">
+      <g transform="translate(30,0)" fill="none" stroke="currentColor" opacity=".08">
+        <path d="M-7,0C-8,-80-9,-160-7,-240C-5,-320-6,-375-4,-418L4,-418C6,-375,5,-320,7,-240C9,-160,8,-80,7,0Z" fill="currentColor" stroke="none"/>
+        <line x1="-7" y1="-85" x2="6" y2="-87" stroke-width="2.5" stroke-linecap="round" opacity=".5"/>
+        <line x1="-7" y1="-162" x2="6" y2="-160" stroke-width="2" stroke-linecap="round" opacity=".45"/>
+        <line x1="-6" y1="-242" x2="5" y2="-244" stroke-width="1.5" stroke-linecap="round" opacity=".4"/>
+        <line x1="-5" y1="-310" x2="5" y2="-308" stroke-width="1.5" stroke-linecap="round" opacity=".35"/>
+        <line x1="-7" y1="-150" x2="-52" y2="-200" stroke-width="4" stroke-linecap="round"/>
+        <line x1="7" y1="-200" x2="50" y2="-250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="-7" y1="-268" x2="-40" y2="-318" stroke-width="3" stroke-linecap="round"/>
+        <line x1="7" y1="-308" x2="38" y2="-354" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="-5" y1="-358" x2="-22" y2="-396" stroke-width="2" stroke-linecap="round"/>
+        <line x1="5" y1="-378" x2="20" y2="-414" stroke-width="1.5" stroke-linecap="round"/>
+      </g>
+      <g transform="translate(120,0) scale(.72)" fill="none" stroke="currentColor" opacity=".05">
+        <path d="M-7,0C-8,-80-9,-160-7,-240C-5,-320-6,-375-4,-418L4,-418C6,-375,5,-320,7,-240C9,-160,8,-80,7,0Z" fill="currentColor" stroke="none"/>
+        <line x1="-7" y1="-85" x2="6" y2="-87" stroke-width="2.5" stroke-linecap="round" opacity=".5"/>
+        <line x1="-7" y1="-162" x2="6" y2="-160" stroke-width="2" stroke-linecap="round" opacity=".45"/>
+        <line x1="-6" y1="-242" x2="5" y2="-244" stroke-width="1.5" stroke-linecap="round" opacity=".4"/>
+        <line x1="-7" y1="-150" x2="-52" y2="-200" stroke-width="4" stroke-linecap="round"/>
+        <line x1="7" y1="-200" x2="50" y2="-250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="-7" y1="-268" x2="-40" y2="-318" stroke-width="3" stroke-linecap="round"/>
+        <line x1="7" y1="-308" x2="38" y2="-354" stroke-width="2.5" stroke-linecap="round"/>
+      </g>
+    </svg>
     <div class="container">
       <div class="pain-header">
         <div class="badge" style="background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.7);">Sound familiar?</div>
@@ -1402,7 +1498,7 @@
         <div class="pain-card fade-up fade-up-delay-1">
           <div class="pain-icon">👥</div>
           <h3>Your team runs on memory</h3>
-          <p>Onboarding is verbal. Task lists live in someone's head. When a host misses something or leaves, the knowledge walks out the door with them.</p>
+          <p>Onboarding is verbal. Task lists live in someone's head. When a staff member misses something or leaves, the knowledge walks out the door with them.</p>
         </div>
         <div class="pain-card fade-up fade-up-delay-2">
           <div class="pain-icon">🔁</div>
@@ -1417,9 +1513,9 @@
   <section class="solution">
     <div class="container">
       <div class="solution-header">
-        <div class="badge" style="margin-bottom:16px;"><span class="badge-dot"></span>The LAGOMos difference</div>
+        <div class="badge" style="margin-bottom:16px;"><span class="badge-dot"></span>The LagomOS difference</div>
         <h2>Three pillars.<br><em style="font-style:italic; color:var(--sage);">One complete system.</em></h2>
-        <p>LAGOM is Swedish for "just right." We built exactly what a studio owner needs — no bloat, no complexity, no features you'll never use. Revenue intelligence, people systems, and operational structure, working together.</p>
+        <p>LAGOM is Swedish for "just right." Not too much, not too little — exactly what your studio needs to run without you holding it together. An owner intelligence layer, a team operations system, and the structural clarity to connect them.</p>
       </div>
     </div>
   </section>
@@ -1431,72 +1527,75 @@
       <!-- Feature 1: Revenue -->
       <div class="feature-row fade-up" id="revenue">
         <div class="feature-content">
+          <div class="feature-product-tag">Owner HQ</div>
           <div class="feature-number">01</div>
           <h3>Revenue — down<br>to the dollar.</h3>
-          <p>Every dollar your studio earns, tracked across Sessions, Memberships, Punch Passes, Gift Cards, Groups, and more. Compared month-to-date, last month, and last year — so you always know if you're ahead or behind, and exactly why.</p>
+          <p>Not a Momence export. Not a spreadsheet you update manually. Revenue organized by category, compared across time periods — with the detail to tell you not just what happened, but why.</p>
           <div class="feature-bullet">
             <div class="feature-bullet-dot">✓</div>
-            <span>MTD, LMD, and year-over-year breakdowns by revenue category</span>
+            <span>Revenue by category across days, months, and years — with comparisons that reveal actual trends</span>
           </div>
           <div class="feature-bullet">
             <div class="feature-bullet-dot">✓</div>
-            <span>New vs. cancelled member tracking with net change at a glance</span>
+            <span>Net member change at a glance — new sign-ups, cancellations, and the number that tells you where you stand</span>
           </div>
           <div class="feature-bullet">
             <div class="feature-bullet-dot">✓</div>
-            <span>Member lifetime analysis, punch pass aging, gift card performance</span>
+            <span>Lifetime value by plan type, plan aging, gift card performance — the detail Momence doesn't surface on its own</span>
           </div>
         </div>
         <div class="feature-visual">
-          <img src="images/revenue.png" alt="LAGOMos Revenue Insights dashboard showing MTD, LMD, and year-over-year comparisons" class="feature-screenshot" />
+          <img src="revenue.png" alt="LagomOS Revenue Insights dashboard showing MTD, LMD, and year-over-year comparisons" class="feature-screenshot" />
         </div>
       </div>
 
       <!-- Feature 2: People -->
       <div class="feature-row reverse fade-up" id="people">
         <div class="feature-content">
+          <div class="feature-product-tag">Staff HQ</div>
           <div class="feature-number">02</div>
           <h3>People — built to<br>run without you.</h3>
-          <p>Structured onboarding with 30+ checklist items across Pre-First Shift, First Shift, and Training Period. Access management so you always know who can get into what. Guest origin tracking so you know where your best customers are coming from.</p>
+          <p>Your studio runs the same way every shift — because the checklist is built in, not memorized. Onboarding your next staff member doesn't start from scratch. And when someone leaves, the knowledge doesn't walk out with them.</p>
           <div class="feature-bullet">
             <div class="feature-bullet-dot">✓</div>
-            <span>Host onboarding and offboarding checklists — nothing left to memory</span>
+            <span>Shift-by-shift task checklists — customized to your studio, so the right things happen without you watching</span>
           </div>
           <div class="feature-bullet">
             <div class="feature-bullet-dot">✓</div>
-            <span>Access management — who has which tools, always current</span>
+            <span>Onboarding and offboarding structure for every staff member — nothing left to word-of-mouth</span>
           </div>
           <div class="feature-bullet">
             <div class="feature-bullet-dot">✓</div>
-            <span>Guest origin and "Hear About Us" data, member upgrade/downgrade history</span>
+            <span>Inventory tracking with low-stock alerts — so the studio never runs out of what it needs</span>
           </div>
         </div>
         <div class="feature-visual">
-          <img src="images/people.png" alt="LAGOMos Open Ops host checklist showing prioritized daily tasks" class="feature-screenshot" />
+          <img src="people.png" alt="LagomOS Open Ops staff checklist showing prioritized daily tasks" class="feature-screenshot" />
         </div>
       </div>
 
       <!-- Feature 3: Operations -->
       <div class="feature-row fade-up" id="operations">
         <div class="feature-content">
+          <div class="feature-product-tag">Owner HQ</div>
           <div class="feature-number">03</div>
           <h3>Operations — intentional,<br>not reactive.</h3>
-          <p>Prioritized deliverables for the owner. Recurring tasks with assigned ownership. Inventory reorder alerts by location. And a weekly meeting structure that keeps the whole team aligned — without requiring you to hold it all together yourself.</p>
+          <p>A clear view of what actually needs your attention — prioritized, assigned, and structured so nothing falls through the cracks. The owner operations layer that keeps the business moving without requiring you to hold it all in your head.</p>
           <div class="feature-bullet">
             <div class="feature-bullet-dot">✓</div>
-            <span>Owner View: Highest / High / Medium / Low prioritized deliverables</span>
+            <span>Owner View — deliverables sorted by priority, so you always know what matters most right now</span>
           </div>
           <div class="feature-bullet">
             <div class="feature-bullet-dot">✓</div>
-            <span>Inventory management with low-stock alerts by location</span>
+            <span>Owner/Operator role and responsibilities, day to day and ongoing — structured, not improvised</span>
           </div>
           <div class="feature-bullet">
             <div class="feature-bullet-dot">✓</div>
-            <span>Weekly meeting agenda: Pulse → Revenue Engine → Build the Ship → Decisions</span>
+            <span>Weekly meeting structure — Pulse, Revenue, Build, Decisions — the whole team aligned without you driving it</span>
           </div>
         </div>
         <div class="feature-visual">
-          <img src="images/operations.png" alt="LAGOMos Inventory Manage showing par levels, reorder alerts, and status by item" class="feature-screenshot" />
+          <img src="operations.png" alt="LagomOS Inventory Manage showing par levels, reorder alerts, and status by item" class="feature-screenshot" />
         </div>
       </div>
 
@@ -1533,26 +1632,51 @@
 
   <!-- ── PRICING PHILOSOPHY ────────────────────────────── -->
   <section class="pricing-philosophy">
+    <svg class="birch-deco" aria-hidden="true" viewBox="20 -440 280 445" preserveAspectRatio="xMaxYMax meet" style="right:0;bottom:0;height:100%;color:white;">
+      <g transform="translate(238,0)" fill="none" stroke="currentColor" opacity=".10">
+        <path d="M-7,0C-8,-80-9,-160-7,-240C-5,-320-6,-375-4,-418L4,-418C6,-375,5,-320,7,-240C9,-160,8,-80,7,0Z" fill="currentColor" stroke="none"/>
+        <line x1="-7" y1="-85" x2="6" y2="-87" stroke-width="2.5" stroke-linecap="round" opacity=".5"/>
+        <line x1="-7" y1="-162" x2="6" y2="-160" stroke-width="2" stroke-linecap="round" opacity=".45"/>
+        <line x1="-6" y1="-242" x2="5" y2="-244" stroke-width="1.5" stroke-linecap="round" opacity=".4"/>
+        <line x1="-5" y1="-310" x2="5" y2="-308" stroke-width="1.5" stroke-linecap="round" opacity=".35"/>
+        <line x1="-7" y1="-150" x2="-52" y2="-200" stroke-width="4" stroke-linecap="round"/>
+        <line x1="7" y1="-200" x2="50" y2="-250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="-7" y1="-268" x2="-40" y2="-318" stroke-width="3" stroke-linecap="round"/>
+        <line x1="7" y1="-308" x2="38" y2="-354" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="-5" y1="-358" x2="-22" y2="-396" stroke-width="2" stroke-linecap="round"/>
+        <line x1="5" y1="-378" x2="20" y2="-414" stroke-width="1.5" stroke-linecap="round"/>
+      </g>
+      <g transform="translate(140,0) scale(.74)" fill="none" stroke="currentColor" opacity=".06">
+        <path d="M-7,0C-8,-80-9,-160-7,-240C-5,-320-6,-375-4,-418L4,-418C6,-375,5,-320,7,-240C9,-160,8,-80,7,0Z" fill="currentColor" stroke="none"/>
+        <line x1="-7" y1="-85" x2="6" y2="-87" stroke-width="2.5" stroke-linecap="round" opacity=".5"/>
+        <line x1="-7" y1="-162" x2="6" y2="-160" stroke-width="2" stroke-linecap="round" opacity=".45"/>
+        <line x1="-6" y1="-242" x2="5" y2="-244" stroke-width="1.5" stroke-linecap="round" opacity=".4"/>
+        <line x1="-7" y1="-150" x2="-52" y2="-200" stroke-width="4" stroke-linecap="round"/>
+        <line x1="7" y1="-200" x2="50" y2="-250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="-7" y1="-268" x2="-40" y2="-318" stroke-width="3" stroke-linecap="round"/>
+        <line x1="7" y1="-308" x2="38" y2="-354" stroke-width="2.5" stroke-linecap="round"/>
+      </g>
+    </svg>
     <div class="container">
       <div class="badge" style="background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.7);margin-bottom:20px;">
         <span style="width:6px;height:6px;background:rgba(255,255,255,0.6);border-radius:50%;display:inline-block;margin-right:2px;"></span>
-        A different kind of deal
+        Built for your studio
       </div>
-      <h2>Own it.<br><em>Don't rent it forever.</em></h2>
-      <p class="pricing-sub">Most software charges you month after month just to keep the lights on. LAGOMos is different — you pay once for a system built and configured for your studio, and it's yours. No per-seat fees, no annual price hikes, no dependency.</p>
+      <h2>A platform built<br><em>to your studio.</em></h2>
+      <p class="pricing-sub">LagomOS isn't a generic tool you configure yourself. It's a purpose-built platform — set up for your studio's structure, your revenue categories, your team — and designed to grow with you. Start with one system. Add the other when you're ready. Extend it further with professional services when your studio calls for something more.</p>
       <div class="pricing-cards">
         <div class="pricing-card fade-up">
-          <div class="pricing-card-tag">One-time</div>
+          <div class="pricing-card-tag">Foundation</div>
           <h3>Setup &amp; Configuration</h3>
-          <p>We build and configure your complete LAGOMos system — Revenue, People, and Operations — tailored to your studio's structure and Momence data. Pay once. Own it forever.</p>
+          <p>We build Owner HQ, Staff HQ, or both — mapped to your studio's structure and connected to your Momence data. Configured from the start to reflect how your business actually runs.</p>
         </div>
         <div class="pricing-card fade-up fade-up-delay-1">
-          <div class="pricing-card-tag">Optional</div>
+          <div class="pricing-card-tag">Extend it</div>
           <h3>Professional Services</h3>
-          <p>Ongoing support, system updates, new features as your studio grows, and strategic guidance when you need it. Add it when you want it, drop it when you don't.</p>
+          <p>Need a custom report, a new workflow, or something the standard platform doesn't do yet? We scope it, quote it, and build it — on your timeline, without a retainer.</p>
         </div>
       </div>
-      <p class="pricing-note">Exact pricing is discussed during your discovery call — every studio is a little different.</p>
+      <p class="pricing-note">Three options, transparent pricing. <a href="pricing.html" style="color:var(--sage);text-decoration:none;border-bottom:1px solid var(--sage);">See the full breakdown →</a></p>
     </div>
   </section>
 
@@ -1562,7 +1686,7 @@
       <div class="outcomes-header">
         <div class="badge" style="margin-bottom:16px;"><span class="badge-dot"></span>What changes</div>
         <h2>Visibility you've never had.<br>Decisions you can actually make.</h2>
-        <p>LAGOMos surfaces what was always there — hidden in your Momence data and your daily operations — but never organized.</p>
+        <p>LagomOS surfaces what was always there — hidden in your Momence data and your daily operations — but never organized.</p>
       </div>
       <div class="outcomes-grid">
         <div class="outcome-card fade-up">
@@ -1571,11 +1695,11 @@
         </div>
         <div class="outcome-card fade-up fade-up-delay-1">
           <div class="outcome-num">30<sup>+</sup></div>
-          <div class="outcome-label">Host onboarding checklist items — nothing left to tribal knowledge or memory</div>
+          <div class="outcome-label">Staff onboarding checklist items — nothing left to tribal knowledge or memory</div>
         </div>
         <div class="outcome-card fade-up fade-up-delay-2">
           <div class="outcome-num">8<sup>+</sup></div>
-          <div class="outcome-label">Revenue categories tracked in real time — Sessions, Memberships, Punch Passes, and more</div>
+          <div class="outcome-label">Revenue categories tracked in real time — Sessions, Memberships, Plans, and more</div>
         </div>
         <div class="outcome-card fade-up fade-up-delay-3">
           <div class="outcome-num">1<sup>view</sup></div>
@@ -1589,11 +1713,12 @@
   <section class="integrations">
     <div class="container">
       <div class="integrations-header">
-        <p>Works with the tools you already use</p>
+        <p>Replaces the tools you've been stitching together</p>
         <div class="integration-logos">
-          <div class="int-logo momence">Momence</div>
-          <div class="int-logo">Google Sheets</div>
-          <div class="int-logo" style="color:var(--gray-lt); border-style:dashed;">More coming soon</div>
+          <div class="int-logo" style="color:var(--gray-lt);text-decoration:line-through;">Google Sheets</div>
+          <div class="int-logo" style="color:var(--gray-lt);text-decoration:line-through;">Notion / Docs</div>
+          <div class="int-logo" style="color:var(--gray-lt);text-decoration:line-through;">Paper checklists</div>
+          <div class="int-logo" style="color:var(--gray-lt);text-decoration:line-through;">Momence exports</div>
         </div>
       </div>
     </div>
@@ -1623,16 +1748,41 @@
 
   <!-- ── FINAL CTA ─────────────────────────────────────── -->
   <section class="final-cta">
+    <svg class="birch-deco" aria-hidden="true" viewBox="20 -440 260 445" preserveAspectRatio="xMaxYMax meet" style="right:0;bottom:0;height:95%;color:#86AEAD;">
+      <g transform="translate(218,0)" fill="none" stroke="currentColor" opacity=".11">
+        <path d="M-7,0C-8,-80-9,-160-7,-240C-5,-320-6,-375-4,-418L4,-418C6,-375,5,-320,7,-240C9,-160,8,-80,7,0Z" fill="currentColor" stroke="none"/>
+        <line x1="-7" y1="-85" x2="6" y2="-87" stroke-width="2.5" stroke-linecap="round" opacity=".5"/>
+        <line x1="-7" y1="-162" x2="6" y2="-160" stroke-width="2" stroke-linecap="round" opacity=".45"/>
+        <line x1="-6" y1="-242" x2="5" y2="-244" stroke-width="1.5" stroke-linecap="round" opacity=".4"/>
+        <line x1="-5" y1="-310" x2="5" y2="-308" stroke-width="1.5" stroke-linecap="round" opacity=".35"/>
+        <line x1="-7" y1="-150" x2="-52" y2="-200" stroke-width="4" stroke-linecap="round"/>
+        <line x1="7" y1="-200" x2="50" y2="-250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="-7" y1="-268" x2="-40" y2="-318" stroke-width="3" stroke-linecap="round"/>
+        <line x1="7" y1="-308" x2="38" y2="-354" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="-5" y1="-358" x2="-22" y2="-396" stroke-width="2" stroke-linecap="round"/>
+        <line x1="5" y1="-378" x2="20" y2="-414" stroke-width="1.5" stroke-linecap="round"/>
+      </g>
+      <g transform="translate(125,0) scale(.70)" fill="none" stroke="currentColor" opacity=".07">
+        <path d="M-7,0C-8,-80-9,-160-7,-240C-5,-320-6,-375-4,-418L4,-418C6,-375,5,-320,7,-240C9,-160,8,-80,7,0Z" fill="currentColor" stroke="none"/>
+        <line x1="-7" y1="-85" x2="6" y2="-87" stroke-width="2.5" stroke-linecap="round" opacity=".5"/>
+        <line x1="-7" y1="-162" x2="6" y2="-160" stroke-width="2" stroke-linecap="round" opacity=".45"/>
+        <line x1="-6" y1="-242" x2="5" y2="-244" stroke-width="1.5" stroke-linecap="round" opacity=".4"/>
+        <line x1="-7" y1="-150" x2="-52" y2="-200" stroke-width="4" stroke-linecap="round"/>
+        <line x1="7" y1="-200" x2="50" y2="-250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="-7" y1="-268" x2="-40" y2="-318" stroke-width="3" stroke-linecap="round"/>
+        <line x1="7" y1="-308" x2="38" y2="-354" stroke-width="2.5" stroke-linecap="round"/>
+      </g>
+    </svg>
     <div class="container">
       <div class="badge" style="margin-bottom:20px;"><span class="badge-dot"></span>Ready to step back?</div>
       <h2>Your studio should run<br>when you're not in the room.</h2>
-      <p>LAGOMos gives you the Revenue, People, and Operations infrastructure to make that real — starting with a discovery call.</p>
+      <p>LagomOS gives you the Revenue, People, and Operations infrastructure to make that real — starting with a discovery call.</p>
       <div class="final-cta-actions">
         <a href="#demo" class="btn btn-primary btn-lg">
           <span class="play-icon"></span>
           Watch the Demo
         </a>
-        <a href="mailto:hello@lagom.os" class="btn btn-outline btn-lg">Book a Discovery Call</a>
+        <a href="mailto:sales@lagomos.com" class="btn btn-outline btn-lg">Book a Discovery Call</a>
       </div>
       <p class="cta-note">Built by a studio owner. For studio owners. No sales pressure.</p>
     </div>
@@ -1643,7 +1793,7 @@
     <div class="container">
       <div class="footer-inner">
         <div>
-          <div class="footer-logo">LAGOM<span>os</span></div>
+          <div class="footer-logo"><img src="logo-leaf.svg" height="28" alt=""><span class="wordmark">Lagom<span class="os">OS</span></span></div>
           <div class="footer-tagline">Operational intelligence for wellness studios</div>
         </div>
         <ul class="footer-links">
@@ -1651,9 +1801,9 @@
           <li><a href="#people">People</a></li>
           <li><a href="#operations">Operations</a></li>
           <li><a href="#demo">Demo</a></li>
-          <li><a href="mailto:hello@lagom.os">Contact</a></li>
+          <li><a href="mailto:sales@lagomos.com">Contact</a></li>
         </ul>
-        <div class="footer-copy">© 2026 LAGOMos. All rights reserved.</div>
+        <div class="footer-copy">© 2026 LagomOS. All rights reserved.</div>
       </div>
     </div>
   </footer>

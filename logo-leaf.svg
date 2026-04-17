@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+
+  <!-- Background circle -->
+  <circle cx="100" cy="100" r="90" fill="#1E293B"/>
+
+  <!-- Stem -->
+  <line x1="100" y1="150" x2="100" y2="168" stroke="#86AEAD" stroke-width="2.5" stroke-linecap="round"/>
+
+  <!-- Birch leaf body — wider below center, long tapered tip -->
+  <path d="
+    M 100,36
+    C 116,50 136,74 136,100
+    C 136,124 120,143 100,150
+    C 80,143 64,124 64,100
+    C 64,74 84,50 100,36
+    Z
+  " fill="#86AEAD"/>
+
+  <!-- Central vein -->
+  <line x1="100" y1="44" x2="100" y2="148" stroke="rgba(255,255,255,0.32)" stroke-width="1.5" stroke-linecap="round"/>
+
+  <!-- Left veins -->
+  <line x1="100" y1="74" x2="79" y2="87" stroke="rgba(255,255,255,0.26)" stroke-width="1" stroke-linecap="round"/>
+  <line x1="100" y1="92" x2="74" y2="106" stroke="rgba(255,255,255,0.26)" stroke-width="1" stroke-linecap="round"/>
+  <line x1="100" y1="111" x2="76" y2="123" stroke="rgba(255,255,255,0.26)" stroke-width="1" stroke-linecap="round"/>
+
+  <!-- Right veins -->
+  <line x1="100" y1="74" x2="121" y2="87" stroke="rgba(255,255,255,0.26)" stroke-width="1" stroke-linecap="round"/>
+  <line x1="100" y1="92" x2="126" y2="106" stroke="rgba(255,255,255,0.26)" stroke-width="1" stroke-linecap="round"/>
+  <line x1="100" y1="111" x2="124" y2="123" stroke="rgba(255,255,255,0.26)" stroke-width="1" stroke-linecap="round"/>
+
+</svg>

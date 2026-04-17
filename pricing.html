@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pricing — LagomOS</title>
+  <meta name="description" content="Simple, transparent pricing for LagomOS. Choose the system that fits your studio — Staff HQ, Owner HQ, or both. One-time setup. No surprises." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ivory:    #F8FAFC;
+      --white:    #FFFFFF;
+      --forest:   #1E293B;
+      --sage:     #86AEAD;
+      --sage-lt:  #B4CFCE;
+      --sand-lt:  #DFF0EF;
+      --charcoal: #1E293B;
+      --gray:     #64748B;
+      --gray-lt:  #94A3B8;
+      --border:   #E2E8F0;
+      --serif:    'Cormorant Garamond', Georgia, serif;
+      --sans:     'DM Sans', system-ui, sans-serif;
+      --max:      1140px;
+      --radius:   12px;
+      --shadow:   0 4px 32px rgba(30, 41, 59, 0.08);
+      --shadow-lg:0 16px 64px rgba(30, 41, 59, 0.14);
+    }
+
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body {
+      font-family: var(--sans);
+      background: var(--ivory);
+      color: var(--charcoal);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+
+    .container {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ─── BADGE ────────────────────────────────────────────── */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--sand-lt);
+      color: var(--forest);
+      font-family: var(--sans);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 100px;
+    }
+    .badge-dot {
+      width: 6px; height: 6px;
+      background: var(--sage);
+      border-radius: 50%;
+    }
+
+    /* ─── BUTTONS ──────────────────────────────────────────── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 28px;
+      border-radius: 8px;
+      font-family: var(--sans);
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+    .btn-primary { background: var(--forest); color: var(--white); }
+    .btn-primary:hover { background: #0f172a; transform: translateY(-1px); box-shadow: 0 6px 24px rgba(30,41,59,0.25); }
+    .btn-outline { background: transparent; color: var(--forest); border: 1.5px solid var(--forest); }
+    .btn-outline:hover { background: var(--forest); color: var(--white); }
+    .btn-lg { padding: 17px 36px; font-size: 16px; }
+    .btn-sage { background: var(--sage); color: var(--white); }
+    .btn-sage:hover { background: #6d9a99; transform: translateY(-1px); }
+
+    /* ─── NAV ──────────────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      transition: background 0.3s, box-shadow 0.3s;
+    }
+    nav.scrolled {
+      background: rgba(248, 250, 252, 0.96);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 1px 0 var(--border);
+    }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 20px 24px;
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--serif);
+      font-size: 24px;
+      font-weight: 500;
+      color: var(--forest);
+      letter-spacing: -0.02em;
+    }
+    .nav-logo img { display: block; flex-shrink: 0; }
+    .nav-logo .wordmark { color: var(--forest); }
+    .nav-logo .wordmark .os { color: var(--sage); }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 36px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--gray);
+      transition: color 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--forest); }
+    .nav-cta { display: flex; align-items: center; gap: 12px; }
+    @media (max-width: 768px) { .nav-links { display: none; } }
+
+    /* ─── HERO ─────────────────────────────────────────────── */
+    .pricing-hero {
+      padding: 140px 0 80px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .pricing-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 50% 30%, rgba(134,174,173,0.09) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .pricing-hero h1 {
+      font-family: var(--serif);
+      font-size: clamp(40px, 5vw, 68px);
+      font-weight: 500;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: var(--forest);
+      margin-bottom: 20px;
+    }
+    .pricing-hero h1 em { font-style: italic; color: var(--sage); }
+    .pricing-hero p {
+      font-size: 18px;
+      color: var(--gray);
+      max-width: 520px;
+      margin: 0 auto;
+      font-weight: 300;
+      line-height: 1.7;
+    }
+
+    /* ─── PRICING CARDS ────────────────────────────────────── */
+    .pricing-section {
+      padding: 80px 0 100px;
+    }
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      align-items: start;
+    }
+    @media (max-width: 900px) {
+      .pricing-grid { grid-template-columns: 1fr; max-width: 480px; margin: 0 auto; }
+    }
+
+    .pricing-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 36px 32px;
+      position: relative;
+      box-shadow: var(--shadow);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .pricing-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+    }
+    .pricing-card.featured {
+      background: var(--forest);
+      border-color: var(--forest);
+      color: white;
+    }
+    .featured-tag {
+      position: absolute;
+      top: -13px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--sage);
+      color: white;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 5px 16px;
+      border-radius: 100px;
+      white-space: nowrap;
+    }
+    .card-tier {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--sage);
+      margin-bottom: 12px;
+    }
+    .featured .card-tier { color: var(--sage-lt); }
+    .card-name {
+      font-family: var(--serif);
+      font-size: 28px;
+      font-weight: 500;
+      color: var(--forest);
+      margin-bottom: 8px;
+      line-height: 1.1;
+    }
+    .featured .card-name { color: white; }
+    .card-tagline {
+      font-size: 14px;
+      color: var(--gray);
+      font-weight: 300;
+      margin-bottom: 28px;
+      line-height: 1.5;
+    }
+    .featured .card-tagline { color: rgba(255,255,255,0.6); }
+
+    .card-price {
+      margin-bottom: 8px;
+    }
+    .price-amount {
+      font-family: var(--serif);
+      font-size: 52px;
+      font-weight: 500;
+      color: var(--forest);
+      line-height: 1;
+    }
+    .featured .price-amount { color: white; }
+    .price-period {
+      font-size: 15px;
+      color: var(--gray);
+      font-weight: 300;
+    }
+    .featured .price-period { color: rgba(255,255,255,0.55); }
+    .card-setup {
+      font-size: 13px;
+      color: var(--gray-lt);
+      margin-bottom: 28px;
+      padding-bottom: 28px;
+      border-bottom: 1px solid var(--border);
+    }
+    .featured .card-setup {
+      color: rgba(255,255,255,0.4);
+      border-bottom-color: rgba(255,255,255,0.12);
+    }
+    .card-setup strong {
+      color: var(--charcoal);
+      font-weight: 600;
+    }
+    .featured .card-setup strong { color: rgba(255,255,255,0.75); }
+
+    .card-features {
+      list-style: none;
+      margin-bottom: 32px;
+    }
+    .card-features li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 14px;
+      color: var(--charcoal);
+      margin-bottom: 12px;
+      line-height: 1.5;
+    }
+    .featured .card-features li { color: rgba(255,255,255,0.8); }
+    .feature-check {
+      width: 18px; height: 18px;
+      background: var(--sand-lt);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      color: var(--sage);
+      flex-shrink: 0;
+      margin-top: 1px;
+      font-weight: 700;
+    }
+    .featured .feature-check {
+      background: rgba(134,174,173,0.25);
+      color: var(--sage-lt);
+    }
+
+    .card-btn {
+      display: block;
+      text-align: center;
+      padding: 14px;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+    .card-btn-dark {
+      background: var(--forest);
+      color: white;
+    }
+    .card-btn-dark:hover { background: #0f172a; }
+    .card-btn-light {
+      background: white;
+      color: var(--forest);
+    }
+    .card-btn-light:hover { background: var(--ivory); }
+    .card-btn-outline {
+      background: transparent;
+      color: var(--forest);
+      border: 1.5px solid var(--border);
+    }
+    .card-btn-outline:hover { border-color: var(--forest); }
+
+    .upgrade-note {
+      text-align: center;
+      margin-top: 24px;
+      font-size: 13px;
+      color: var(--gray-lt);
+    }
+    .upgrade-note a {
+      color: var(--sage);
+      font-weight: 500;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s;
+    }
+    .upgrade-note a:hover { border-bottom-color: var(--sage); }
+
+    /* ─── FEATURE TABLE ────────────────────────────────────── */
+    .comparison {
+      padding: 80px 0 100px;
+      background: var(--white);
+    }
+    .comparison-header {
+      text-align: center;
+      margin-bottom: 56px;
+    }
+    .comparison-header h2 {
+      font-family: var(--serif);
+      font-size: clamp(28px, 3.5vw, 44px);
+      font-weight: 500;
+      color: var(--forest);
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+    }
+    .comparison-header p {
+      font-size: 16px;
+      color: var(--gray);
+      font-weight: 300;
+    }
+
+    .comparison-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .comparison-table th, .comparison-table td {
+      padding: 14px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+      font-size: 14px;
+    }
+    .comparison-table th {
+      font-family: var(--sans);
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--gray-lt);
+      padding-bottom: 16px;
+    }
+    .comparison-table th:not(:first-child) {
+      text-align: center;
+    }
+    .comparison-table td:not(:first-child) {
+      text-align: center;
+    }
+    .comparison-table tr:last-child td {
+      border-bottom: none;
+    }
+    .table-category {
+      background: var(--ivory);
+    }
+    .table-category td {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--sage);
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    .check-yes {
+      color: var(--sage);
+      font-size: 16px;
+      font-weight: 700;
+    }
+    .check-no {
+      color: var(--border);
+      font-size: 18px;
+    }
+    .col-featured {
+      background: rgba(134,174,173,0.06);
+    }
+    .th-featured {
+      color: var(--forest) !important;
+      font-size: 13px !important;
+      font-weight: 600 !important;
+      text-transform: none !important;
+      letter-spacing: 0 !important;
+    }
+
+    @media (max-width: 640px) {
+      .comparison-table { font-size: 13px; }
+      .comparison-table th, .comparison-table td { padding: 10px 8px; }
+    }
+
+    /* ─── PROFESSIONAL SERVICES ────────────────────────────── */
+    .pro-services {
+      padding: 100px 0;
+    }
+    .pro-services-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+    @media (max-width: 768px) {
+      .pro-services-inner { grid-template-columns: 1fr; gap: 48px; }
+    }
+    .pro-services-copy h2 {
+      font-family: var(--serif);
+      font-size: clamp(28px, 3.5vw, 44px);
+      font-weight: 500;
+      color: var(--forest);
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+    .pro-services-copy h2 em { font-style: italic; color: var(--sage); }
+    .pro-services-copy p {
+      font-size: 16px;
+      color: var(--gray);
+      line-height: 1.75;
+      font-weight: 300;
+      margin-bottom: 16px;
+    }
+    .pro-services-copy .rate {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--sand-lt);
+      color: var(--forest);
+      font-size: 14px;
+      font-weight: 600;
+      padding: 8px 16px;
+      border-radius: 8px;
+      margin-top: 8px;
+    }
+
+    .hour-blocks { display: flex; flex-direction: column; gap: 16px; }
+    .hour-block {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      transition: box-shadow 0.2s, border-color 0.2s;
+    }
+    .hour-block:hover {
+      border-color: var(--sage-lt);
+      box-shadow: var(--shadow);
+    }
+    .hour-block-left {}
+    .hour-block-hours {
+      font-family: var(--serif);
+      font-size: 26px;
+      font-weight: 500;
+      color: var(--forest);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .hour-block-desc {
+      font-size: 13px;
+      color: var(--gray);
+      font-weight: 300;
+    }
+    .hour-block-right { text-align: right; flex-shrink: 0; }
+    .hour-block-price {
+      font-family: var(--serif);
+      font-size: 26px;
+      font-weight: 500;
+      color: var(--forest);
+      line-height: 1;
+    }
+    .hour-block-rate {
+      font-size: 12px;
+      color: var(--gray-lt);
+      margin-top: 2px;
+    }
+    .hour-block-savings {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--sage);
+      margin-top: 2px;
+    }
+
+    /* ─── FAQ ──────────────────────────────────────────────── */
+    .faq {
+      padding: 100px 0;
+      background: var(--ivory);
+    }
+    .faq-header {
+      text-align: center;
+      margin-bottom: 56px;
+    }
+    .faq-header h2 {
+      font-family: var(--serif);
+      font-size: clamp(28px, 3.5vw, 44px);
+      font-weight: 500;
+      color: var(--forest);
+      letter-spacing: -0.02em;
+    }
+    .faq-list {
+      max-width: 720px;
+      margin: 0 auto;
+    }
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+    }
+    .faq-question {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 24px 0;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--forest);
+      user-select: none;
+    }
+    .faq-question:hover { color: var(--sage); }
+    .faq-icon {
+      width: 24px; height: 24px;
+      border: 1.5px solid var(--border);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      color: var(--gray-lt);
+      flex-shrink: 0;
+      transition: all 0.2s;
+    }
+    .faq-item.open .faq-icon {
+      background: var(--forest);
+      border-color: var(--forest);
+      color: white;
+      transform: rotate(45deg);
+    }
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease, padding 0.2s;
+    }
+    .faq-item.open .faq-answer {
+      max-height: 400px;
+    }
+    .faq-answer-inner {
+      padding-bottom: 24px;
+      font-size: 15px;
+      color: var(--gray);
+      line-height: 1.75;
+      font-weight: 300;
+    }
+
+    /* ─── FINAL CTA ────────────────────────────────────────── */
+    .final-cta {
+      padding: 100px 0;
+      background: var(--forest);
+      text-align: center;
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+    .final-cta::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 70% 80% at 50% 50%, rgba(134,174,173,0.2) 0%, transparent 70%);
+    }
+    .final-cta .container { position: relative; }
+    .final-cta h2 {
+      font-family: var(--serif);
+      font-size: clamp(32px, 4vw, 52px);
+      font-weight: 500;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+    }
+    .final-cta p {
+      font-size: 17px;
+      color: rgba(255,255,255,0.65);
+      max-width: 480px;
+      margin: 0 auto 40px;
+      font-weight: 300;
+      line-height: 1.7;
+    }
+    .final-cta-actions {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+    .btn-ghost {
+      background: rgba(255,255,255,0.12);
+      color: white;
+      border: 1.5px solid rgba(255,255,255,0.25);
+    }
+    .btn-ghost:hover { background: rgba(255,255,255,0.2); }
+    .cta-note {
+      font-size: 13px;
+      color: rgba(255,255,255,0.4);
+    }
+
+    /* ─── FOOTER ───────────────────────────────────────────── */
+    footer {
+      padding: 40px 0;
+      border-top: 1px solid var(--border);
+      background: var(--ivory);
+    }
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .footer-logo { display: flex; align-items: center; gap: 8px; font-family: var(--serif); font-size: 20px; color: var(--forest); font-weight: 500; }
+    .footer-logo img { display: block; flex-shrink: 0; }
+    .footer-logo .wordmark { color: var(--forest); }
+    .footer-logo .wordmark .os { color: var(--sage); }
+    .footer-tagline { font-size: 12px; color: var(--gray-lt); margin-top: 2px; }
+    .footer-links { display: flex; gap: 24px; list-style: none; }
+    .footer-links a { font-size: 13px; color: var(--gray-lt); transition: color 0.2s; }
+    .footer-links a:hover { color: var(--charcoal); }
+    .footer-copy { font-size: 12px; color: var(--gray-lt); }
+
+    /* ─── ANIMATIONS ───────────────────────────────────────── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+    .fade-up-delay-1 { transition-delay: 0.1s; }
+    .fade-up-delay-2 { transition-delay: 0.2s; }
+    .fade-up-delay-3 { transition-delay: 0.3s; }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAV ──────────────────────────────────────────── -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo"><img src="logo-leaf.svg" height="36" alt="LagomOS mark"><span class="wordmark">Lagom<span class="os">OS</span></span></a>
+      <ul class="nav-links">
+        <li><a href="index.html#revenue">Revenue</a></li>
+        <li><a href="index.html#people">People</a></li>
+        <li><a href="index.html#operations">Operations</a></li>
+        <li><a href="pricing.html" class="active">Pricing</a></li>
+      </ul>
+      <div class="nav-cta">
+        <a href="mailto:sales@lagomos.com" class="btn btn-primary">Book a Call</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ── HERO ─────────────────────────────────────────── -->
+  <section class="pricing-hero">
+    <div class="container">
+      <div class="badge" style="margin-bottom:20px;"><span class="badge-dot"></span>Simple, transparent pricing</div>
+      <h1>An operating system<br>that is <em>just right.</em></h1>
+      <p>The Swedes have a word for it: Lagom. Not too much, not too little — exactly what a studio needs. Just a platform built to run your studio — one that compounds in value with every feature we add.</p>
+    </div>
+  </section>
+
+  <!-- ── PRICING CARDS ─────────────────────────────────── -->
+  <section class="pricing-section">
+    <div class="container">
+      <div class="pricing-grid">
+
+        <!-- Staff HQ -->
+        <div class="pricing-card fade-up">
+          <div class="card-name">Staff HQ</div>
+          <div class="card-tagline">So the right things happen, even when you're not the one doing them.</div>
+          <div class="card-price">
+            <span class="price-amount">$199</span>
+            <span class="price-period">/month</span>
+          </div>
+          <div class="card-setup"><strong>$2,500</strong> setup</div>
+          <ul class="card-features">
+            <li><span class="feature-check">✓</span>Customizable task checklists by shift — so your studio runs the same way every time</li>
+            <li><span class="feature-check">✓</span>Structured onboarding and offboarding — nothing left to memory or word of mouth</li>
+            <li><span class="feature-check">✓</span>Inventory tracking so you never run out</li>
+            <li><span class="feature-check">✓</span>Staff key progress indicators</li>
+          </ul>
+          <a href="mailto:sales@lagomos.com" class="card-btn card-btn-outline">Book a Discovery Call</a>
+        </div>
+
+        <!-- Owner + Staff (Featured) -->
+        <div class="pricing-card featured fade-up fade-up-delay-1">
+          <div class="featured-tag">Best Value</div>
+          <div class="card-name">Owner + Staff HQ</div>
+          <div class="card-tagline">Every part of your business, working — so you don't have to hold it all together.</div>
+          <div class="card-price">
+            <span class="price-amount">$399</span>
+            <span class="price-period">/month</span>
+          </div>
+          <div class="card-setup"><strong style="color:rgba(255,255,255,0.8);">$3,500</strong> setup &nbsp;·&nbsp; saves $1,500</div>
+          <ul class="card-features">
+            <li><span class="feature-check">✓</span>Everything in Staff HQ</li>
+            <li><span class="feature-check">✓</span>Everything in Owner HQ</li>
+            <li><span class="feature-check">✓</span>One system, one source of truth — owner and team, fully aligned</li>
+            <li><span class="feature-check">✓</span>What your team does and what your business earns — connected</li>
+            <li><span class="feature-check">✓</span>Saves $99/month vs. purchasing separately</li>
+            <li><span class="feature-check">✓</span>Saves $1,500 on setup</li>
+          </ul>
+          <a href="mailto:sales@lagomos.com" class="card-btn card-btn-light">Book a Discovery Call</a>
+        </div>
+
+        <!-- Owner HQ -->
+        <div class="pricing-card fade-up fade-up-delay-2">
+          <div class="card-name">Owner HQ</div>
+          <div class="card-tagline">Run your business like you know what's going on. Because you will.</div>
+          <div class="card-price">
+            <span class="price-amount">$299</span>
+            <span class="price-period">/month</span>
+          </div>
+          <div class="card-setup"><strong>$2,500</strong> setup</div>
+          <ul class="card-features">
+            <li><span class="feature-check">✓</span>Revenue visualized by category — with the breakout details that actually matter</li>
+            <li><span class="feature-check">✓</span>Sales trends across days, months, and years — all in one view</li>
+            <li><span class="feature-check">✓</span>Operational oversight — the priorities, decisions, and deliverables that keep the business moving</li>
+          </ul>
+          <a href="mailto:sales@lagomos.com" class="card-btn card-btn-outline">Book a Discovery Call</a>
+        </div>
+
+      </div>
+
+      <p class="upgrade-note">
+        Already on Staff HQ or Owner HQ? <a href="mailto:sales@lagomos.com">Upgrade to the full system</a> for a $1,000 setup fee — your monthly rate adjusts automatically.
+      </p>
+    </div>
+  </section>
+
+  <!-- ── FEATURE COMPARISON ────────────────────────────── -->
+  <section class="comparison">
+    <div class="container">
+      <div class="comparison-header">
+        <div class="badge" style="margin-bottom:16px;"><span class="badge-dot"></span>What's included</div>
+        <h2>Everything, side by side.</h2>
+        <p>Every feature across all three tiers — no fine print.</p>
+      </div>
+
+      <div style="overflow-x:auto;">
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th style="width:44%;">Feature</th>
+              <th style="width:18%;">Staff HQ</th>
+              <th style="width:18%;" class="col-featured"><span class="th-featured">OWNER + STAFF</span></th>
+              <th style="width:18%;">Owner HQ</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            <!-- Staff Systems -->
+            <tr class="table-category">
+              <td colspan="4">Staff Systems</td>
+            </tr>
+            <tr>
+              <td>Smart checklists, customized to your studio, shift by shift</td>
+              <td><span class="check-yes">✓</span></td>
+              <td class="col-featured"><span class="check-yes">✓</span></td>
+              <td><span class="check-no">—</span></td>
+            </tr>
+            <tr>
+              <td>Staff onboarding, customized to your studio</td>
+              <td><span class="check-yes">✓</span></td>
+              <td class="col-featured"><span class="check-yes">✓</span></td>
+              <td><span class="check-no">—</span></td>
+            </tr>
+            <tr>
+              <td>Inventory tracking</td>
+              <td><span class="check-yes">✓</span></td>
+              <td class="col-featured"><span class="check-yes">✓</span></td>
+              <td><span class="check-no">—</span></td>
+            </tr>
+            <tr>
+              <td>Staff announcements hub</td>
+              <td><span class="check-yes">✓</span></td>
+              <td class="col-featured"><span class="check-yes">✓</span></td>
+              <td><span class="check-no">—</span></td>
+            </tr>
+
+            <!-- Revenue Intelligence -->
+            <tr class="table-category">
+              <td colspan="4">Revenue Intelligence</td>
+            </tr>
+            <tr>
+              <td>Sales trends month-over-month, year-over-year</td>
+              <td><span class="check-no">—</span></td>
+              <td class="col-featured"><span class="check-yes">✓</span></td>
+              <td><span class="check-yes">✓</span></td>
+            </tr>
+            <tr>
+              <td>Revenue by category, customized to your studio</td>
+              <td><span class="check-no">—</span></td>
+              <td class="col-featured"><span class="check-yes">✓</span></td>
+              <td><span class="check-yes">✓</span></td>
+            </tr>
+            <tr>
+              <td>Revenue category breakdown details</td>
+              <td><span class="check-no">—</span></td>
+              <td class="col-featured"><span class="check-yes">✓</span></td>
+              <td><span class="check-yes">✓</span></td>
+            </tr>
+            <tr>
+              <td>Guest origin tracking</td>
+              <td><span class="check-no">—</span></td>
+              <td class="col-featured"><span class="check-yes">✓</span></td>
+              <td><span class="check-yes">✓</span></td>
+            </tr>
+
+            <!-- Operations -->
+            <tr class="table-category">
+              <td colspan="4">Operations</td>
+            </tr>
+            <tr>
+              <td>Owner/Operator role and responsibilities — day to day and ongoing</td>
+              <td><span class="check-no">—</span></td>
+              <td class="col-featured"><span class="check-yes">✓</span></td>
+              <td><span class="check-yes">✓</span></td>
+            </tr>
+
+            <!-- Platform -->
+            <tr class="table-category">
+              <td colspan="4">Platform</td>
+            </tr>
+            <tr>
+              <td>Momence integration</td>
+              <td><span class="check-yes">✓</span></td>
+              <td class="col-featured"><span class="check-yes">✓</span></td>
+              <td><span class="check-yes">✓</span></td>
+            </tr>
+            <tr>
+              <td>Platform updates &amp; new feature releases</td>
+              <td><span class="check-yes">✓</span></td>
+              <td class="col-featured"><span class="check-yes">✓</span></td>
+              <td><span class="check-yes">✓</span></td>
+            </tr>
+            <tr>
+              <td>Upgrade path available</td>
+              <td><span class="check-yes">✓</span></td>
+              <td class="col-featured"><span class="check-no">—</span></td>
+              <td><span class="check-yes">✓</span></td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PROFESSIONAL SERVICES ─────────────────────────── -->
+  <section class="pro-services">
+    <div class="container">
+      <div class="pro-services-inner">
+        <div class="pro-services-copy fade-up">
+          <div class="badge" style="margin-bottom:20px;"><span class="badge-dot"></span>Professional Services</div>
+          <h2>Need something<br><em>custom-built?</em></h2>
+          <p>Your monthly plan covers the core platform and all standard updates. When you need something built specifically for your studio — a new report, a custom workflow, an additional integration — that's where professional services comes in.</p>
+          <p>We scope it with you, quote the hours, and build it. No retainer required, no commitment beyond the project at hand.</p>
+          <a href="mailto:proservices@lagomos.com" class="rate">$120 / hour &nbsp;·&nbsp; Pre-purchased hour blocks</a>
+        </div>
+        <div class="hour-blocks fade-up fade-up-delay-1">
+          <a href="mailto:proservices@lagomos.com" class="hour-block">
+            <div class="hour-block-left">
+              <div class="hour-block-hours">5 Hours</div>
+              <div class="hour-block-desc">Great for smaller requests — a new view, a custom report, minor workflow adjustments.</div>
+            </div>
+            <div class="hour-block-right">
+              <div class="hour-block-price">$600</div>
+              <div class="hour-block-rate">$120 / hr</div>
+            </div>
+          </a>
+          <a href="mailto:proservices@lagomos.com" class="hour-block">
+            <div class="hour-block-left">
+              <div class="hour-block-hours">10 Hours</div>
+              <div class="hour-block-desc">Mid-size builds — new modules, additional integrations, multi-view dashboards.</div>
+            </div>
+            <div class="hour-block-right">
+              <div class="hour-block-price">$1,100</div>
+              <div class="hour-block-rate">$110 / hr</div>
+              <div class="hour-block-savings">Saves $100</div>
+            </div>
+          </a>
+          <a href="mailto:proservices@lagomos.com" class="hour-block">
+            <div class="hour-block-left">
+              <div class="hour-block-hours">20 Hours</div>
+              <div class="hour-block-desc">Larger projects — new platform pillars, significant custom functionality, multi-phase builds.</div>
+            </div>
+            <div class="hour-block-right">
+              <div class="hour-block-price">$2,000</div>
+              <div class="hour-block-rate">$100 / hr</div>
+              <div class="hour-block-savings">Saves $400</div>
+            </div>
+          </a>
+          <p style="font-size:13px; color:var(--gray-lt); margin-top:8px; padding-left:4px;">All projects begin with a free 30 minute scope conversation and free quote. Hours are pre-purchased before work begins.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FAQ ───────────────────────────────────────────── -->
+  <section class="faq">
+    <div class="container">
+      <div class="faq-header">
+        <div class="badge" style="margin-bottom:16px;"><span class="badge-dot"></span>Common questions</div>
+        <h2>Everything you're wondering.</h2>
+      </div>
+      <div class="faq-list">
+
+        <div class="faq-item">
+          <div class="faq-question">
+            What does the monthly fee actually cover?
+            <div class="faq-icon">+</div>
+          </div>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">Your monthly fee keeps your platform running, connected to Momence, and improving. It includes all platform updates and new feature releases as they roll out — so your system gets better over time without you doing anything. Custom builds and one-off projects are separate (see Professional Services above).</div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            How long does setup take?
+            <div class="faq-icon">+</div>
+          </div>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">Most studios are fully configured and live within 1–2 weeks. Setup includes connecting your Momence data, configuring your revenue categories, building out your staff system (if included), and walking through the platform with you so you know exactly how to use it from day one.</div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            Is there a contract or minimum commitment?
+            <div class="faq-icon">+</div>
+          </div>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">No long-term contract. Your monthly subscription continues as long as you want it — cancel anytime. The one-time setup fee is non-refundable, as it covers the work to build and configure your system. That system remains yours regardless.</div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            Can I start with one HQ and add the other later?
+            <div class="faq-icon">+</div>
+          </div>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">Yes. If you start with Staff HQ or Owner HQ and later want to add the other side, you pay a $1,000 upgrade setup fee (not the full $2,500 again) and your monthly rate adjusts to the combined $399. It's designed to make it easy to grow into the full system when you're ready.</div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            Do I need Momence to use LagomOS?
+            <div class="faq-icon">+</div>
+          </div>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">For Owner HQ, yes — Momence is the primary data source for all your revenue and member intelligence. Staff HQ can function without a deep Momence connection, but the platform is purpose-built for Momence-powered wellness studios. If you're on a different booking system, reach out and we'll talk through what's possible.</div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            What if I need something the platform doesn't do yet?
+            <div class="faq-icon">+</div>
+          </div>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">That's exactly what Professional Services is for. You bring the idea, we scope it and build it. Pre-purchased hour blocks start at $600 for 5 hours. Larger projects get a custom quote before any work begins.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FINAL CTA ─────────────────────────────────────── -->
+  <section class="final-cta">
+    <div class="container">
+      <div class="badge" style="background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.7);margin-bottom:20px;">
+        <span style="width:6px;height:6px;background:rgba(255,255,255,0.6);border-radius:50%;display:inline-block;"></span>
+        No commitment required
+      </div>
+      <h2>Not sure where to start?<br>Let's figure it out together.</h2>
+      <p>Book a free discovery call. We'll look at your studio, talk through which system fits, and give you a straight answer on whether LagomOS is the right move.</p>
+      <div class="final-cta-actions">
+        <a href="mailto:sales@lagomos.com" class="btn btn-sage btn-lg">Book a Discovery Call</a>
+        <a href="index.html" class="btn btn-ghost btn-lg">See the Platform</a>
+      </div>
+      <p class="cta-note">No sales pitch. No pressure. Just a real conversation.</p>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ────────────────────────────────────────── -->
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <div>
+          <div class="footer-logo"><img src="logo-leaf.svg" height="28" alt=""><span class="wordmark">Lagom<span class="os">OS</span></span></div>
+          <div class="footer-tagline">Operational intelligence for wellness studios</div>
+        </div>
+        <ul class="footer-links">
+          <li><a href="index.html#revenue">Revenue</a></li>
+          <li><a href="index.html#people">People</a></li>
+          <li><a href="index.html#operations">Operations</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+          <li><a href="mailto:sales@lagomos.com">Contact</a></li>
+        </ul>
+        <div class="footer-copy">© 2026 LagomOS. All rights reserved.</div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Navbar scroll
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 40);
+    });
+
+    // Fade-up animations
+    const fadeEls = document.querySelectorAll('.fade-up');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    fadeEls.forEach(el => observer.observe(el));
+
+    // FAQ accordion
+    document.querySelectorAll('.faq-item').forEach(item => {
+      item.querySelector('.faq-question').addEventListener('click', () => {
+        const isOpen = item.classList.contains('open');
+        document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+        if (!isOpen) item.classList.add('open');
+      });
+    });
+  </script>
+
+</body>
+</html>
