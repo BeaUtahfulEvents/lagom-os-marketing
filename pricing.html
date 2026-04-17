@@ -756,6 +756,54 @@
     .footer-links a:hover { color: var(--charcoal); }
     .footer-copy { font-size: 12px; color: var(--gray-lt); }
 
+    /* ─── INCLUDED HOURS CALLOUT ──────────────────────────── */
+    .included-hours {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--sand-lt);
+      border: 1px solid var(--sage-lt);
+      border-radius: 8px;
+      padding: 10px 14px;
+      margin-bottom: 20px;
+    }
+
+    .included-hours-icon {
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+
+    .included-hours-text {
+      flex: 1;
+    }
+
+    .included-hours-amount {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--forest);
+      line-height: 1.3;
+    }
+
+    .included-hours-note {
+      font-size: 11px;
+      color: var(--gray);
+      margin-top: 1px;
+    }
+
+    /* Featured card version */
+    .pricing-card.featured .included-hours {
+      background: rgba(255,255,255,0.12);
+      border-color: rgba(255,255,255,0.25);
+    }
+
+    .pricing-card.featured .included-hours-amount {
+      color: var(--white);
+    }
+
+    .pricing-card.featured .included-hours-note {
+      color: rgba(255,255,255,0.6);
+    }
+
     /* ─── ANIMATIONS ───────────────────────────────────────── */
     .fade-up {
       opacity: 0;
@@ -828,6 +876,13 @@
             <span class="price-period">/month</span>
           </div>
           <div class="card-setup"><strong>$2,500</strong> setup</div>
+          <div class="included-hours">
+            <div class="included-hours-icon">⏱</div>
+            <div class="included-hours-text">
+              <div class="included-hours-amount">2.5 hrs/mo professional services included</div>
+              <div class="included-hours-note">Use for custom builds, edits, or platform work · doesn't rollover</div>
+            </div>
+          </div>
           <ul class="card-features">
             <li><span class="feature-check">✓</span>Customizable task checklists by shift — so your studio runs the same way every time</li>
             <li><span class="feature-check">✓</span>Structured onboarding and offboarding — nothing left to memory or word of mouth</li>
@@ -847,6 +902,13 @@
             <span class="price-period">/month</span>
           </div>
           <div class="card-setup"><strong style="color:rgba(255,255,255,0.8);">$3,500</strong> setup &nbsp;·&nbsp; saves $1,500</div>
+          <div class="included-hours">
+            <div class="included-hours-icon">⏱</div>
+            <div class="included-hours-text">
+              <div class="included-hours-amount">5.0 hrs/mo professional services included</div>
+              <div class="included-hours-note">Use for custom builds, edits, or platform work · doesn't rollover</div>
+            </div>
+          </div>
           <ul class="card-features">
             <li><span class="feature-check">✓</span>Everything in Staff HQ</li>
             <li><span class="feature-check">✓</span>Everything in Owner HQ</li>
@@ -867,6 +929,13 @@
             <span class="price-period">/month</span>
           </div>
           <div class="card-setup"><strong>$2,500</strong> setup</div>
+          <div class="included-hours">
+            <div class="included-hours-icon">⏱</div>
+            <div class="included-hours-text">
+              <div class="included-hours-amount">2.5 hrs/mo professional services included</div>
+              <div class="included-hours-note">Use for custom builds, edits, or platform work · doesn't rollover</div>
+            </div>
+          </div>
           <ul class="card-features">
             <li><span class="feature-check">✓</span>Revenue visualized by category — with the breakout details that actually matter</li>
             <li><span class="feature-check">✓</span>Sales trends across days, months, and years — all in one view</li>
@@ -978,6 +1047,15 @@
               <td colspan="4">Platform</td>
             </tr>
             <tr>
+              <td>
+                Monthly professional service hours included
+                <div style="font-size:11px;color:var(--gray-lt);margin-top:2px;">Doesn't rollover · use for custom builds &amp; edits</div>
+              </td>
+              <td style="font-weight:600;color:var(--forest);">2.5 hrs</td>
+              <td class="col-featured" style="font-weight:600;">5.0 hrs</td>
+              <td style="font-weight:600;color:var(--forest);">2.5 hrs</td>
+            </tr>
+            <tr>
               <td>Momence integration</td>
               <td><span class="check-yes">✓</span></td>
               <td class="col-featured"><span class="check-yes">✓</span></td>
@@ -1009,9 +1087,9 @@
         <div class="pro-services-copy fade-up">
           <div class="badge" style="margin-bottom:20px;"><span class="badge-dot"></span>Professional Services</div>
           <h2>Need something<br><em>custom-built?</em></h2>
-          <p>Your monthly plan covers the core platform and all standard updates. When you need something built specifically for your studio — a new report, a custom workflow, an additional integration — that's where professional services comes in.</p>
-          <p>We scope it with you, quote the hours, and build it. No retainer required, no commitment beyond the project at hand.</p>
-          <a href="mailto:proservices@lagomos.com" class="rate">$120 / hour &nbsp;·&nbsp; Pre-purchased hour blocks</a>
+          <p>Every plan includes monthly professional service hours — 2.5 hrs for Staff HQ and Owner HQ, 5.0 hrs for Owner + Staff HQ. Use them for custom builds, report edits, or workflow adjustments. Hours reset each month and don't rollover.</p>
+          <p>Need more than what's included? Additional hours are available in pre-purchased blocks. We scope it with you, quote the hours, and build it.</p>
+          <a href="mailto:proservices@lagomos.com" class="rate">$120 / hour &nbsp;·&nbsp; Additional hour blocks available</a>
         </div>
         <div class="hour-blocks fade-up fade-up-delay-1">
           <a href="mailto:proservices@lagomos.com" class="hour-block">
