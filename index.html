@@ -364,16 +364,16 @@
 
     /* ─── PLATFORM SCREENSHOTS ────────────────────────────────────── */
     .screens-preview {
-      max-width: 960px;
+      max-width: 1020px;
       margin: 0 auto;
-      padding: 0 24px;
+      padding: 0 24px 100px;
     }
 
     .screens-labels {
       display: flex;
       gap: 24px;
       justify-content: center;
-      margin-bottom: 20px;
+      margin-bottom: 24px;
     }
 
     .screen-label {
@@ -398,70 +398,31 @@
 
     .screens-stack {
       position: relative;
-      height: 540px;
-    }
-
-    @media (max-width: 768px) {
-      .screens-stack { height: auto; }
+      height: 480px;
     }
 
     .screen-card {
       position: absolute;
-      border-radius: 12px;
+      border-radius: 10px;
       overflow: hidden;
-      box-shadow: 0 20px 60px rgba(30, 41, 59, 0.18);
-      background: #1e1e2e;
     }
 
-    .screen-back {
-      width: 72%;
-      right: 0;
-      top: 40px;
-      transform: rotate(1.5deg);
-      z-index: 1;
-      box-shadow: 0 12px 40px rgba(30, 41, 59, 0.12);
-    }
-
+    /* Owner HQ — left, higher, on top */
     .screen-front {
-      width: 72%;
+      width: 60%;
       left: 0;
       top: 0;
       z-index: 2;
-      transform: rotate(-0.5deg);
+      box-shadow: 0 24px 64px rgba(30, 41, 59, 0.20);
     }
 
-    @media (max-width: 768px) {
-      .screen-card { position: static; width: 100%; transform: none; margin-bottom: 16px; }
-      .screens-stack { display: flex; flex-direction: column; }
-    }
-
-    .screen-chrome {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      padding: 10px 14px;
-      background: #2a2a3e;
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-    }
-
-    .chrome-dot {
-      width: 10px; height: 10px;
-      border-radius: 50%;
-      flex-shrink: 0;
-    }
-
-    .chrome-url {
-      flex: 1;
-      font-size: 10px;
-      color: rgba(255,255,255,0.35);
-      font-family: var(--sans);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      background: rgba(255,255,255,0.06);
-      border-radius: 4px;
-      padding: 3px 10px;
-      margin-left: 4px;
+    /* Staff HQ — right, lower, behind */
+    .screen-back {
+      width: 60%;
+      right: 0;
+      top: 56px;
+      z-index: 1;
+      box-shadow: 0 12px 40px rgba(30, 41, 59, 0.10);
     }
 
     .screen-img {
@@ -470,6 +431,11 @@
       height: auto;
       object-fit: cover;
       object-position: top left;
+    }
+
+    @media (max-width: 768px) {
+      .screens-stack { height: auto; display: flex; flex-direction: column; gap: 16px; }
+      .screen-card { position: static; width: 100%; }
     }
 
     /* ─── DASHBOARD PREVIEW (legacy, kept for reference) ──────────── */
@@ -1565,7 +1531,7 @@
   </section>
 
   <!-- ── PLATFORM PREVIEW ─────────────────────────────── -->
-  <section style="padding: 0 0 100px;">
+  <section style="padding: 0;">
     <div class="screens-preview fade-up">
       <!-- Labels above -->
       <div class="screens-labels">
@@ -1578,24 +1544,12 @@
       </div>
       <!-- Overlapping screenshots -->
       <div class="screens-stack">
-        <!-- Back: Staff HQ -->
+        <!-- Back: Staff HQ — right, lower -->
         <div class="screen-card screen-back">
-          <div class="screen-chrome">
-            <div class="chrome-dot" style="background:#FF5F57;"></div>
-            <div class="chrome-dot" style="background:#FEBC2E;"></div>
-            <div class="chrome-dot" style="background:#28C840;"></div>
-            <div class="chrome-url">coda.io / Staff HQ (Demo) · Key Progress Indicators</div>
-          </div>
           <img src="screenshot-staff-hq.png" alt="Staff HQ — Key Progress Indicators showing membership sales leaderboard" class="screen-img" />
         </div>
-        <!-- Front: Owner HQ -->
+        <!-- Front: Owner HQ — left, higher -->
         <div class="screen-card screen-front">
-          <div class="screen-chrome">
-            <div class="chrome-dot" style="background:#FF5F57;"></div>
-            <div class="chrome-dot" style="background:#FEBC2E;"></div>
-            <div class="chrome-dot" style="background:#28C840;"></div>
-            <div class="chrome-url">coda.io / Owner HQ (Demo) · Revenue Insights</div>
-          </div>
           <img src="screenshot-owner-hq.png" alt="Owner HQ — Revenue Insights dashboard showing MTD, vs prior month, and year-over-year" class="screen-img" />
         </div>
       </div>
